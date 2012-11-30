@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage{mathtools}
+\begin{document}
+\setcounter{MaxMatrixCols}{15}
+
+\title{INF240 Mandatory Exercise 3}
+\author{David Huynh\\ E-mail: dhu009@student.uib.no}
+\date{}
+
+\maketitle
+
+\section*{Computer problem 18.3.2}
+
+We want to decode the given vector that has been encoded with Hamming [15,11] Code and passed through a noisy channel:\\
+$$y=
+\begin{matrix}
+0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0
+\end{matrix}
+$$
+
+The resulting parity check matrix is:\\
+$$H=
+\begin{matrix}
+		0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 & 0\\	  
+		1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0\\
+		0 & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 0\\
+		1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 1
+\end{matrix}
+$$
+
+We use the algorithm described on p.416-417 in our book to decode.\\
+
+We compute the syndrome $s$ by taking the dot product of the received vector and the transposed parity check matrix, $s=yH^{T}$.\\
+$$H^{T} = 
+\begin{matrix}
+	0 & 1 & 0 & 1\\ 
+	0 & 1 & 1 & 0\\
+	0 & 1 & 1 & 1 \\
+	0 & 0 &1 & 1\\
+	1 & 0 & 0 & 1 \\
+	1 & 0 & 1 & 0 \\
+	1 & 0 & 1 & 1 \\
+	1 & 1 & 0 & 0 \\
+	1 & 1 & 0 & 1 \\
+	1 & 1 & 1 & 0 \\
+	1 & 1 & 1 & 1 \\
+	1 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0 \\
+	0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 1 
+\end{matrix}
+$$
+
+Now we compute the dot product of $yH^{T}$ and get:\\
+$$s = 
+\begin{matrix}
+	1 & 1 & 0 & 0
+\end{matrix}
+$$
+
+Next we find out at what position in the parity check matrix the error is by comparing each column with the transposed syndrome.\\
+We can see by looking at $H$ that the error is in column 8.\\
+We flip the 8th bit in $y$ from 1 to 0 and get the decoded vector:\\
+$$decoded Vector = 
+\begin{matrix}
+	0 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & 0
+\end{matrix}
+$$
+
+Since this is a [15,11] Hamming Code we discard the last 4 bits of the decoded vector to obtain the original message:\\
+$$original Message = 
+\begin{matrix}
+	0 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0
+\end{matrix}
+$$
+
+Program output:
+\begin{verbatim}
+Transposed matrix: 
+0 1 0 1 
+0 1 1 0 
+0 1 1 1 
+0 0 1 1 
+1 0 0 1 
+1 0 1 0 
+1 0 1 1 
+1 1 0 0 
+1 1 0 1 
+1 1 1 0 
+1 1 1 1 
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 0 0 1 
+Syndrome vector: 1 1 0 0 
+Error at pos 8
+Flipped bit from 1 to 0
+Decoded vector is: 0 1 1 0 0 0 1 0 0 0 0 1 0 1 0 
+Original message was: 0 1 1 0 0 0 1 0 0 0 0 
+
+\end{verbatim}
+\end{document}

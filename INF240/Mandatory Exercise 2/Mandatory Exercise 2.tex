@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage{parskip}
+\linespread{1}
+
+\begin{document}
+
+\title{INF240 Mandatory Exercise 2}
+\author{David Huynh\\E-mail: dhu009@student.uib.no}
+\date{}
+
+\maketitle
+
+\section{Computer Problem 14, Chapter 6}
+There are three users with pairwise relatively prime moduli $n_{1},n_{2},n_{3}$.
+Suppose that their encryption exponents are all $e = 3$. The same message \emph{m} is sent to each of them and 
+you intercept the ciphertexts $c_{i} \equiv m^{3}(mod$ $n_{i})$ for \emph{i} = 1,2,3.
+
+\subsection{A)}
+\label{a}
+Show that $0 \leq m^{3} < n_{1}n_{2}n_{3}$
+
+\emph{Solution:}\\
+$m < n_{1},n_{2},n_{3} \rightarrow{m^{3} < n_{1}n_{2}n_{3}}$
+
+\subsection{B)}
+\label{b}
+Show how to use the Chinese remainder theorem to find $m^{3}$ (as an exact integer, \emph{not} only as 
+$m^{3} (mod$ $n_{1}n_{2}n_{3})$) and therefore \emph{m}.
+Do this without factoring
+
+\emph{Solution:}\\
+We setup the problem as a system of linear congruences:
+
+$c_{1} \equiv m^{3}(mod$ $n_{1})$\\
+$c_{2} \equiv m^{3}(mod$ $n_{2})$\\
+$c_{3} \equiv m^{3}(mod$ $n_{3})$\\
+
+This can be written as:\\
+$m^{3} \equiv c_{1}(mod$ $n_{1})$\\
+$m^{3} \equiv c_{2}(mod$ $n_{2})$\\
+$m^{3} \equiv c_{3}(mod$ $n_{3})$\\
+
+By Chinese Remainder Theorem there exists one unique solution.\\
+From \ref{a} we know that $m < n_{1},n_{2},n_{3}$ and $m^{3} < n_{1}n_{2}n_{3}$.\\
+We can thus find $m$ by taking the cube root of $m^{3}$.
+$m = \sqrt[3]{m^{3}}$
+
+\newpage
+\subsection{C)}
+Suppose that\\
+$n_{1} = 2469247531693,$ $n_{2} = 11111502225583,$ $n_{3} = 44444222221411$\\
+and the corresponding ciphertexts are:\\
+359335245251, 10436363975495, 5135984059593.
+
+These were all encrypted using $e = 3$. Find the message.
+
+\emph{Solution:}\\
+Solve the system of congruences from \ref{b} using CRT to obtain $m^{3}$. I used the algorithm described on page 108, problem 24 in our book to solve it.\\
+First we compute the product of $n_{1}n_{2}n_{3} = 1219418322585514865441452950268831928809$\\
+Then we obtain the values $z_{i}$ by computing $(n_{1}n_{2}n_{3})/n_{i}$ for $i=1$ to 3.\\
+Afterwards we compute the multiplicative inverse of $y_{i} = z_{i}$ mod $n_{i}$ for $i=1$ to 3\\
+Lastly we sum together $a_{i}*y_{i}*z_{i}$ for $i=1$ to 3 and reduce modulo ($n_{1}n_{2}n_{3}$), this is $m^{3}$\\
+$m^{3} = 521895811536685104609613375$\\
+$m = \sqrt[3]{m^{3}} = \sqrt[3]{521895811536685104609613375} = 805121215$\\
+Replace each pair of numbers (08, 05, 12...) with the english letter at that position, where a = 01, b = 02... to find the decrypted message\\
+Decrypted message = hello\\
+
+Program output:
+\begin{verbatim}
+The product of n1n2..nk is: 1219418322585514865441452950268831928809
+z1 for n1 : 493842074127513750694557613
+y1 for n1 : 216851051457
+
+z2 for n2 : 109743786018234293085678823
+y2 for n2 : 2933660999772
+
+z3 for n3 : 27437049443922098827902019
+y3 for n3 : 28806927150227
+
+M^3 = 521895811536685104609613375
+M = 805121215
+Decrypted message: hello
+
+\end{verbatim}
+
+\end{document}
