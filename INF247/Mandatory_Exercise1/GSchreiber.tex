@@ -38,7 +38,7 @@ This means we can $\oplus$ ciphertext with related plain-text to aquire the 5-bi
 	\item If switch input and output are of weight 1 or 4 then all valid controlbit groups for that input/output will have common bits at certain positions
 \end{enumerate}
 
-By using each of these properties we can find the cabling permutation and thus initial state of the cipher
+By using each of these properties we can find the cabling permutation and thus state of the cipher, and by clocking the state forward or backwards we can find any state, and thus be able to encrypt the last 26 plaintext chars
 
 \subsection{Key-stream}
 
@@ -56,7 +56,9 @@ Next we need to find the position of 5 wheels at time $t$, we do this by:
 	\item In each bucket we store what the key-stream was at that moment
 \end{enumerate}
 
-After all the wheels have been sorted we compare each wheel at same time $t$ and look at the first column of the bucket. We look for contradictions in the column, if the columns do not have all 0s or all 1s then wheel $w$ could not have that position at $t$, further study lets us know that there is only one position that $w$ could be in, because all the other possibilities give contradictions.
+After all the wheels have been sorted we then for each wheel at position $p$ look at the column of the bucket.\\
+We look for contradictions in the column, if the columns do not have all 0s or all 1s then wheel $w$ could not have been permuted to column index $c$ at $p$, further study lets us know that there is only one $c$ that $w$ could be in, because all the other possibilities give contradictions. Because the key-stream is 5-bits this gives no solution for the wheels who have no valid $c$\\
+In other words when running this if there no contradictions then it means column index $c$ is cabled to wheel $w$
 
 \subsection{Controlbit groups}
 
