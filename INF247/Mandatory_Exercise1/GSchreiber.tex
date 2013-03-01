@@ -50,8 +50,25 @@ To find key-stream we
 	\item Store position of ciphertext together with the xor'd group
 \end{enumerate}
 
-Next we need to find 
+Next we need to find the position of 5 wheels at time $t$, we do this by:
+\begin{enumerate}
+	\item Do a type of bucket sort on each wheel, with wheelSize number of buckets and each bucket represents time $t$, or position of the wheel.
+	\item In each bucket we store what the key-stream was at that moment
+\end{enumerate}
+
+After all the wheels have been sorted we compare each wheel at same time $t$ and look at the first column of the bucket. We look for contradictions in the column, if the columns do not have all 0s or all 1s then wheel $w$ could not have that position at $t$, further study lets us know that there is only one position that $w$ could be in, because all the other possibilities give contradictions.
 
 \subsection{Controlbit groups}
+
+We find the valid control bit groups of the switch input/outputs of weight 1 and 4 by:
+\begin{enumerate}
+	\item Generate all possible control bit groups, $2^{5} = 32$ groups
+	\item Run all controlbit groups on the inputs and check if it gives desired output
+	\item If yes, store it
+	\item Check the valid controlbit groups, see if there are any patterns
+	\item Use this pattern to run the same comparison algorithm on wheels we used in section 2.1
+\end{enumerate}
+
+Though patterns do not give complete information, by process of elmination and knowledge of where the other bits are cabled to we can find the rest of the cabling permutation
 
 \end{document}
