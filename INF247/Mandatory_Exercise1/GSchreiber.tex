@@ -1,0 +1,57 @@
+
+\documentclass{article}
+\usepackage{parskip}
+\usepackage{mathtools}
+
+\begin{document}
+
+\title{INF247\\ Mandatory Exercise 1\\ G-Schreiber Cryptanalysis}
+\author{David Huynh\\ E-mail: dhu009@student.uib.no}
+\date{}
+
+\maketitle
+
+\section{Description, known data}
+
+We are given:
+\begin{itemize}
+	\item 1274 ciphertext chars
+	\item Ciphertext chars represented by their position in the CCITT2 code
+	\item 1300 plaintext chars
+	\item Plaintext consists of latin alphabet applied 50 times
+\end{itemize}
+
+Given these pieces of data, find:
+\begin{itemize}
+	\item All internal settings of the cipher
+	\item Initial state of the wheels
+	\item Cabling permutation
+	\item The remaining 26 ciphertext chars
+\end{itemize}
+
+\section{Solution}
+
+With the given data we can perform a known plain-text attack, we can use these properties:
+\begin{enumerate}
+	\item If the ciphertext group is 11111 or 00000 then key-stream $\oplus$  plain-text = 11111 or 00000 (switch input) because no matter what the controlbit group is the ciphertext will be the same.\\ 
+This means we can $\oplus$ ciphertext with related plain-text to aquire the 5-bit key-stream sequence.
+	\item If switch input and output are of weight 1 or 4 then all valid controlbit groups for that input/output will have common bits at certain positions
+\end{enumerate}
+
+By using each of these properties we can find the cabling permutation and thus initial state of the cipher
+
+\subsection{Key-stream}
+
+To find key-stream we
+\begin{enumerate}
+	\item Find all occurences where ciphertext char is 11111 or 00000
+	\item Note at which position in the ciphertext it occurs
+	\item $\oplus$ ciphertext group with plain-text group
+	\item Store position of ciphertext together with the xor'd group
+\end{enumerate}
+
+Next we need to find 
+
+\subsection{Controlbit groups}
+
+\end{document}
