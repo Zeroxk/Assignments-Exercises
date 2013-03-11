@@ -95,8 +95,46 @@ $x_{3} = 3$
 \section{In exercise 19, choose $h$ and $k$ such that the system has a: no solutions, b: a unique solution and c: many solutions. Give separate answers for each part}
 
 \begin{align*}
-$x_{1} + hx_{2} &= 2$\\
-$4x_{1} + 8x_{2} &= k$ 
+x_{1} + hx_{2} &= 2\\
+4x_{1} + 8x_{2} &= k 
 \end{align*}
 
+Echelon form\\
+\begin{align*}
+x_{1} + h & = 2\\
+0x_{1} + (8-4h) & = k-8
+\end{align*}
+
+\subsection{No solution}
+
+We must choose $h$ and $k$ such that the system's echelon form becomes inconsistent.\\
+From the echelon form we can see that if we choose $k = 2$ and $h \neq 8$ we will get row with 0-variables and non-zero $b$
+
+\subsection{Unique solution}
+
+We must choose $h$ and $k$ such that the system's echelon form has no free variabls.\\
+This happens when $h \neq 2$.
+
+\subsection{Multiple solutions}
+
+We must choose $h$ and $k$ such that the system's echelol form has free variables and is consistent.\\
+This happens when $h = 2$ and $k = 8$
+
+\section{In exercise 21 mark each statement True or False. Justify each answer.}
+
+a)\textbf{In some cases, a matrix may be row reduced to more than one matrix in reduced echelon form, using different sequences of row operations.}\\
+False
+
+b)\textbf{The row reduction algorithm applies only to augmented matrices for a linear system.}\\
+False, it can be applied on non-augmented matrices too
+
+c) \textbf{A basic variable in a linear system is a variable that corresponds to a pivot column in the coefficient matrix.}\\
+True, per definition
+
+d) \textbf{Finding a parametric description of the solution set of a linear system is the same as \emph{solving} the system.}\\
+True, parametric description expresses the variables as combinations of eachother or free.
+
+e) \textbf{If one row in an echelon form of an augmented matrix is $[0 0 0 5 0]$, then the associated linear system is inconsistent.}\\
+False, in this case the rightmost column has to be non-zero, the others zero
+ 
 \end{document}
