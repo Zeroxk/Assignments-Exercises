@@ -5,9 +5,9 @@
 
 \begin{document}
 
-\section{Exercise 1}
+\section*{Exercise 1}
 
-\subsection{a}
+\subsection*{a}
 $A=
 \left (
     \begin{matrix}
@@ -29,7 +29,124 @@ $
 \right )
 $
 
+$B=
+\left [
+        \begin{matrix}
+            1 & 2 & 0 & 2 & 5\\
+            0 & 1 & 1 & 1 & 3\\
+            0 & -2 & 1 & 1 & 0\\
+            1 & 2 & 1 & 3 & 7
+        \end{matrix}
+\right ]
+$
 
+Add $-1*row1$ to $row4$\\
+$
+\left [
+        \begin{matrix}
+            1 & 2 & 0 & 2 & 5\\
+            0 & 1 & 1 & 1 & 3\\
+            0 & -2 & 1 & 1 & 0\\
+            0 & 0 & 1 & 1 & 2
+        \end{matrix}
+\right ]
+$
 
+Add $-2*row2$ to $row1$\\
+$
+\left [
+        \begin{matrix}
+            1 & 0 & -2 & 0 & -1\\
+            0 & 1 & 1 & 1 & 3\\
+            0 & -2 & 1 & 1 & 0\\
+            0 & 0 & 1 & 1 & 2
+        \end{matrix}
+\right ]
+$
+
+Add $2*row2$ to $row3$\\
+$
+\left [
+        \begin{matrix}
+            1 & 0 & -2 & 0 & -1\\
+            0 & 1 & 1 & 1 & 3\\
+            0 & 0 & 3 & 3 & 6\\
+            0 & 0 & 1 & 1 & 2
+        \end{matrix}
+\right ]
+$
+
+Divide $row3$ by 3\\
+$
+\left [
+        \begin{matrix}
+            1 & 0 & -2 & 0 & -1\\
+            0 & 1 & 1 & 1 & 3\\
+            0 & 0 & 1 & 1 & 2\\
+            0 & 0 & 1 & 1 & 2
+        \end{matrix}
+\right ]
+$
+
+Add $2*row3$ to $row1$\\
+$
+\left [
+        \begin{matrix}
+            1 & 0 & 0 & 2 & 3\\
+            0 & 1 & 1 & 1 & 3\\
+            0 & 0 & 1 & 1 & 2\\
+            0 & 0 & 1 & 1 & 2
+        \end{matrix}
+\right ]
+$
+
+Add $-1*row3$ to $row2$\\
+$
+\left [
+        \begin{matrix}
+            1 & 0 & 0 & 2 & 3\\
+            0 & 1 & 0 & 0 & 1\\
+            0 & 0 & 1 & 1 & 2\\
+            0 & 0 & 1 & 1 & 2
+        \end{matrix}
+\right ]
+$
+
+Add $-1*row3$ to $row4$\\
+$
+\left [
+        \begin{matrix}
+            1 & 0 & 0 & 2 & 3\\
+            0 & 1 & 0 & 0 & 1\\
+            0 & 0 & 1 & 1 & 2\\
+            0 & 0 & 0 & 0 & 0
+        \end{matrix}
+\right ]
+$
+
+Pivot columns are 1,2 and 3.\\
+Pivot positions are $B_{1,1}$, $B_{2,2}$, $B_{3,3}$. 
+
+Solving $A\Vec{x}=\Vec{b}$. We look at the reduced echelon form of $B$ and that gives us this system:
+\begin{flalign*}
+x_{1} & & + 2x_{4} &= 3 &\\
+    &x_{2} & &= 1\\
+      & &x_{3} + x_{4} &= 2 &\\
+\end{flalign*}
+
+Gives us solution:
+\begin{flalign*}
+x_{1} &= 3-2x_{4} &\\
+x_{2} &= 1 &\\
+x_{3} &= 2-x_{4} &\\
+x_{4} &= free
+\end{flalign*}
+
+\subsection*{b}
+rank(B) = dim(Col(B)) = dim(Row(B)) = number of pivot columns in B = 3\\
+rank(B) + dim(Null(B)) = n = 4\\
+dim(Null(B)) = 4-3 = 1
+
+Basis
 
 \end{document}
