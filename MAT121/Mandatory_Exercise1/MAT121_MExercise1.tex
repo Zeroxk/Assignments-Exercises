@@ -143,10 +143,51 @@ x_{4} &= free
 \end{flalign*}
 
 \subsection*{b}
-rank(B) = dim(Col(B)) = dim(Row(B)) = number of pivot columns in B = 3\\
-rank(B) + dim(Null(B)) = n = 4\\
-dim(Null(B)) = 4-3 = 1
 
-Basis
+\subsubsection*{Basis and dimension for Col(B)}
+Basis: $\{ \{1,0,0,0\}, \{0,1,0,0\}, \{0,0,1,0\} \}$\\
+Dimension: by Theorem dim(Col(B)) = rank(B) = \# of pivot columns in reduced echelon form of B = 3
+
+\subsubsection*{Basis and dimension for Row(B)}
+Basis: $\{ \{1,0,0,2,3\}, \{0,1,0,0,1\}, \{0,0,1,1,2\}\}\\$
+Dimension: by Theorem dim(Row(B)) = dim(Col(B)) = 3
+
+\subsubsection*{Basis and dimension for Null(B)}
+Basis: $\{\}$\\
+Solve $Ax=0$, we already have reduced echelon form of $A$ by $B$ so just replace last column in $B$ with all 0s\\
+
+$
+\left [
+    \begin{matrix}
+        -2x_{4}\\
+         x_{2}\\
+         -x_{4}\\
+         x_{4}
+    \end{matrix}
+\right ]
+$
+
+Decomposition:
+
+$
+\left [
+    \begin{matrix}
+        -2x_{4}\\
+         x_{2}\\
+         -x_{4}\\
+         x_{4}
+    \end{matrix}
+\right ]
+$
+
+Dimension: by Theorem\\
+\begin{flalign*}
+    rank(B) + dim(Null(B)) &= n &\\
+    dim(Null(B)) &= n - rank(B) &\\
+    dim(Null(B)) &= 4 - 3 &\\
+    &= 1
+\end{flalign*}
+
+
 
 \end{document}
