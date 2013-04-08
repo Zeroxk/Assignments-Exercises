@@ -153,29 +153,41 @@ Basis: $\{ \{1,0,0,2,3\}, \{0,1,0,0,1\}, \{0,0,1,1,2\}\}\\$
 Dimension: by Theorem dim(Row(B)) = dim(Col(B)) = 3
 
 \subsubsection*{Basis and dimension for Null(B)}
-Basis: $\{ \{-2, 0, -1, 1\} \}$\\
-Solve $Ax=0$, we already have reduced echelon form of $A$ by $B$ so just replace last column in $B$ with all 0s\\
+Basis: $\{ \{-2, 0, -1, 1\}, \{-3,-1,-2,0,1\} \}$\\
+Solve $Bx=0$, we already have reduced echelon form of $A$ by $B$ so just add column in $B$ with all 0s\\
+
+$
+\left [
+        \begin{matrix}
+            1 & 0 & 0 & 2 & 3 & 0\\
+            0 & 1 & 0 & 0 & 1 & 0\\
+            0 & 0 & 1 & 1 & 2 & 0\\
+            0 & 0 & 0 & 0 & 0 & 0
+        \end{matrix}
+\right ]
+$
 
 $
 \left [
     \begin{matrix}
-        -2x_{4}\\
-         0\\
-         -x_{4}\\
-         x_{4}
+        -2x_{4}-3x_{5}\\
+         -x_{5}\\
+         -x_{4}-2x_{5}\\
+         x_{4}\\
+         x_{5}
     \end{matrix}
 \right ]
 $
 
 Decomposition:
-
 $
 \left [
     \begin{matrix}
-        -2x_{4}\\
-        0\\
-         -x_{4}\\
-         x_{4}
+        -2x_{4}-3x_{5}\\
+         -x_{5}\\
+         -x_{4}-2x_{5}\\
+         x_{4}\\
+         x_{5}
     \end{matrix}
 \right ]
 $
@@ -185,26 +197,630 @@ $ = x_{4}
         -2\\
         0\\
          -1\\
-         1
+         1\\
+         0
+    \end{matrix}
+\right ]
++ x_{5}
+\left [
+    \begin{matrix}
+        -3\\
+        -1\\
+        -2\\
+        0\\
+        1
     \end{matrix}
 \right ]
 $
 
-Dimension: 1
+Dimension: 2
 
 \subsubsection*{Rank of B}
 By Theorem
 \begin{flalign*}
     rank(B) + dim(Null(B)) &= n &\\
     rank(B) &= n-dim(Null(B))\\
-    rank(B) &= 4-1\\
-    rank(B) &= 1
+    rank(B) &= 5-2\\
+    rank(B) &= 3
 \end{flalign*}
 
 \subsection*{c}
 
-A matrix $A$ is invertible iff its determinant is non-zero
+A matrix $A$ is invertible if its row-reduced echelon form is $I_{4}$, we already know the row-reduced echelon form  of $B$ so row-reduced echelon form of $A$ is just $B$ without the last column. This is because while row-reducing $B$ you also row-reduce $A$.
 
+RREF of $A$:\\
+$A=
+\left [
+    \begin{matrix}
+        1 & 0 & 0 & 2\\
+        0 & 1 & 0 & 0\\
+        0 & 0 & 1 & 1\\
+        0 & 0 & 0 & 0
+    \end{matrix}
+\right ]
+$
 
+We see that $A \not = I_{4}$ so $A$ is not invertible.
+
+\newpage
+
+\section*{Exercise 2}
+
+\subsection*{a}
+
+$A=
+\left (
+    \begin{matrix}
+        1 & -1 & 2\\
+        0 & 1 & 3
+    \end{matrix}
+\right )
+,
+B=
+\left (
+    \begin{matrix}
+        2 & -1\\
+        -1 & 0\\
+        3 & -1
+    \end{matrix}
+\right )
+, \vec{x} =
+\left (
+    \begin{matrix}
+        1\\
+        2
+    \end{matrix}
+\right )
+$
+
+\subsubsection*{y=B$\vec{x}$}
+$B\vec{x} =
+\left (
+    \begin{matrix}
+        2 & -1\\
+        -1 & 0\\
+        3 & -1
+    \end{matrix}
+\right )
+\left (
+    \begin{matrix}
+        1\\
+        2
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        2 + (-2)\\
+        -1 + 0\\
+        3 - 2
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        0\\
+        -1\\
+        1
+    \end{matrix}
+\right )
+$\\
+$\vec{y} =
+\left (
+    \begin{matrix}
+        0\\
+        -1\\
+        1
+    \end{matrix}
+\right )
+$
+
+\subsubsection*{C=AB}
+$AB=
+\left (
+    \begin{matrix}
+        1 & -1 & 2\\
+        0 & 1 & 3
+    \end{matrix}
+\right )
+\left (
+    \begin{matrix}
+        2 & -1\\
+        -1 & 0\\
+        3 & -1
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        1*2 + (-1)*(-1) + 2*3 & 1*(-1) + (-1)*0 + 2*(-1)\\
+        0*2 + 1*(-1) + 3*3 & 0*(-1) + 1*0 + 3*(-1)
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        2 + 1 + 6 & -1 + 0 - 2\\
+        0 - 1 + 9 & 0 + 0 - 3
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        9 & -3\\
+        8 & -3
+    \end{matrix}
+\right )
+$
+
+$C=
+\left (
+    \begin{matrix}
+        9 & -3\\
+        8 & -3
+    \end{matrix}
+\right )
+$
+
+\subsubsection*{A$\vec{y}$}
+$A\vec{y} =
+\left (
+    \begin{matrix}
+        1 & -1 & 2\\
+        0 & 1 & 3
+    \end{matrix}
+\right )
+\left (
+    \begin{matrix}
+        0\\
+        -1\\
+        1
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        0 + (-1)*(-1) + 2*1\\
+        0 + (-1)*1 + 3*1
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        0 + 1 + 2\\
+        0 - 1 + 3
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        3\\
+        2
+    \end{matrix}
+\right )
+$
+
+$A\vec{y}=
+\left (
+    \begin{matrix}
+        3\\
+        2
+    \end{matrix}
+\right )
+$
+
+\subsubsection*{C$\vec{x}$}
+$C\vec{x} =
+\left (
+    \begin{matrix}
+        9 & -3\\
+        8 & -3
+    \end{matrix}
+\right )
+\left (
+    \begin{matrix}
+        1\\
+        2
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        9 + (-3)*2\\
+        8 + (-3)*2
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        9 - 6\\
+        8 - 6
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        3\\
+        2
+    \end{matrix}
+\right )
+$
+
+$C\vec{x}=
+\left (
+    \begin{matrix}
+        3\\
+        2
+    \end{matrix}
+\right )
+$
+
+\subsubsection*{C$^{T}$B$^{T}$}
+C$^{T}=
+\left (
+    \begin{matrix}
+        9 & 8\\
+        -3 & -3
+    \end{matrix}
+\right )
+$,
+B$^{T}=
+\left (
+    \begin{matrix}
+        2 & -1 & 3\\
+        -1 & 0 & -1\\
+    \end{matrix}
+\right )
+$
+
+C$^{T}$B$^{T}=
+\left (
+    \begin{matrix}
+       9*2 + 8*(-1) & 9*(-1) + 0 & 9*3 + 8*(-1)\\
+       -3*2 + (-3)*(-1) & (-3)*(-1) + 0 & (-3)*3 + (-3)*(-1)
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        18-8 & -9 & 27-8\\
+        -6+3 & 3 & -9+3
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        10 & -9 & 19\\
+        -3 & 3 & -6
+    \end{matrix}
+\right )
+$
+
+C$^{T}$B$^{T}=
+\left (
+    \begin{matrix}
+        10 & -9 & 19\\
+        -3 & 3 & -6
+    \end{matrix}
+\right )
+$
+
+\subsubsection*{(A$^{T}$+B)C}
+A$^{T}=
+\left (
+    \begin{matrix}
+        1 & 0\\
+        -1 & 1\\
+        2 & 3
+    \end{matrix}
+\right )
+$
+
+A$^{T}C=
+\left (
+    \begin{matrix}
+        1 & 0\\
+        -1 & 1\\
+        2 & 3
+    \end{matrix}
+\right )
+\left (
+    \begin{matrix}
+        9 & -3\\
+        8 & -3
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        9 + 0 & -3 + 0\\
+        -9 + 8 & 3 - 3\\
+        18 + 24 & -6 - 9
+    \end{matrix}
+\right )
+=
+\left (
+    \begin{matrix}
+        9 & -3\\
+        -1 & 0\\
+        42 & -15
+    \end{matrix}
+\right )
+$
+
+We notice that $(C^{T}B^{T})^{T} = BC$ by transpose properties $(A^{T})^{T}=A$ and $(AB)^{T}=B^{T}A^{T}$.\\
+$(C^{T}B^{T})^{T} = BC =
+\left (
+    \begin{matrix}
+        10 & -9 & 19\\
+        -3 & 3 & -6
+    \end{matrix}
+\right )
+^{T}=
+\left (
+    \begin{matrix}
+        10 & -3\\
+        -9 & 3\\
+        19 & -6
+    \end{matrix}
+\right )
+$
+
+A$^{T}$C + BC =
+$
+\left (
+    \begin{matrix}
+        9 & -3\\
+        -1 & 0\\
+        42 & -15
+    \end{matrix}
+\right )
++
+\left (
+    \begin{matrix}
+        10 & -3\\
+        -9 & 3\\
+        19 & -6
+    \end{matrix}
+\right )       
+=
+\left (
+    \begin{matrix}
+        19 & -6\\
+        -10 & 3\\
+        61 & -21
+    \end{matrix}
+\right )
+$
+
+\subsection*{b}
+
+\subsubsection*{$A^{2}$?}
+We cannot calculate $A^{2}$ because to multiply two matrices $A$ with dimensions $m \times k$ the second matrix $B$ needs to have dimensions $k \times n$ by theorem. In this exercise $B=A$ and since $A$ is not a square matrix it will not meet the requirements.
+
+\subsubsection*{$A^{-1}$?}
+We cannot calculate $A^{-1}$ because $A$ is not square, therefore $detA$ is not defined and by theorem it does not have an inverse
+
+\subsection*{c}
+We denote the matrix as $A$.\\
+$A=
+\left (
+    \begin{matrix}
+        1 & 1 & 2\\
+        -1 & 1 & 1\\
+        2 & 3 & 3
+    \end{matrix}
+\right )
+$
+
+We apply formula for inverse of $n \times n$ matrix:\\
+$A^{-1} = \frac{1}{det(A)} adj(A)$
+
+To find $adj(A)$ we need to find transpose of the cofactor-matrix:
+
+Cofactor-matrix $C$:\\
+$A_{11}=
+\left |
+    \begin{matrix}
+        1 & 1\\
+        3 & 3
+    \end{matrix}
+\right |
+, A_{12} =
+\left |
+    \begin{matrix}
+        -1 & 1\\
+        2 & 3
+    \end{matrix}
+\right |
+, A_{13} =
+\left |
+    \begin{matrix}
+        -1 & 1\\
+        2 & 3
+    \end{matrix}
+\right |
+$
+
+$A_{21}=
+\left |
+    \begin{matrix}
+        1 & 2\\
+        3 & 3
+    \end{matrix}
+\right |
+, A_{22}=
+\left |
+    \begin{matrix}
+        1 & 2\\
+        2 & 3
+    \end{matrix}
+\right |
+, A_{23}=
+\left |
+    \begin{matrix}
+        1 & 1\\
+        2 & 3
+    \end{matrix}
+\right |
+$
+
+$A_{31}=
+\left |
+    \begin{matrix}
+        1 & 2\\
+        1 & 1
+    \end{matrix}
+\right |
+, A_{32}=
+\left |
+    \begin{matrix}
+        1 & 2\\
+        -1 & 1
+    \end{matrix}
+\right |
+, A_{33}=
+\left |
+    \begin{matrix}
+        1 & 1\\
+        -1 & 1
+    \end{matrix}
+\right |
+$
+
+$
+\left (
+    \begin{matrix}
+        + & - & +\\
+        - & + & -\\
+        + & - & +
+    \end{matrix}
+\right )
+$
+
+$C=
+\left (
+    \begin{matrix}
+        \left |
+            \begin{matrix}
+                1 & 1\\
+                3 & 3
+            \end{matrix}
+        \right |
+        = + 0,
+        \left |
+            \begin{matrix}
+                -1 & 1\\
+                2 & 3
+            \end{matrix}
+        \right |
+        = - (-5),
+        \left |
+            \begin{matrix}
+                -1 & 1\\
+                2 & 3
+            \end{matrix}
+        \right |
+        = + (-5)\\
+        \left |
+            \begin{matrix}
+                1 & 2\\
+                3 & 3
+            \end{matrix}
+        \right |
+        = - (-3),
+        \left |
+            \begin{matrix}
+                1 & 2\\
+                2 & 3
+            \end{matrix}
+        \right |
+        = + (-1),
+        \left |
+            \begin{matrix}
+                1 & 1\\
+                2 & 3
+            \end{matrix}
+        \right |
+        = - 1\\
+        \left |
+            \begin{matrix}
+                1 & 2\\
+                1 & 1
+            \end{matrix}
+        \right |
+        = + (-1),
+        \left |
+            \begin{matrix}
+                1 & 2\\
+                -1 & 1
+            \end{matrix}
+        \right |
+        = - 3,
+        \left |
+            \begin{matrix}
+                1 & 1\\
+                -1 & 1
+            \end{matrix}
+        \right |
+        = + 2
+    \end{matrix}
+\right )
+=\\
+\left (
+    \begin{matrix}
+        0 & 5 & -5\\
+        3 & -1 & -1\\
+        -1 & -3 & 2
+    \end{matrix}
+\right )
+$
+
+We calculate det$A$ next by multiplying each element at index $i$ in row $A_{1}$ with the element in index $i$ in row $C_{1}$ and summing them together:\\
+det$A = (1*0) + (1*5) + (2*-5) = 0 + 5 - 10 = -5$
+
+adj(A) = C$^{T}$
+C$^{T}=
+\left (
+    \begin{matrix}
+        0 & 3 & -1\\
+        5 & -1 & -3\\
+        -5 & -1 & 2
+    \end{matrix}
+\right )
+$
+
+A$^{-1} = \frac{1}{-5}
+\left (
+    \begin{matrix}
+        0 & 3 & -1\\
+        5 & -1 & -3\\
+        -5 & -1 & 2
+    \end{matrix}
+\right )       
+=
+\left (
+    \begin{matrix}
+        0 & \frac{3}{-5} & \frac{1}{5}\\
+        -1 & \frac{1}{5} & \frac{3}{5}\\
+        1 & \frac{1}{5} & \frac{2}{-5}
+    \end{matrix}
+\right )
+$
+
+A$^{-1} =
+\left (
+    \begin{matrix}
+        0 & \frac{3}{-5} & \frac{1}{5}\\
+        -1 & \frac{1}{5} & \frac{3}{5}\\
+        1 & \frac{1}{5} & \frac{2}{-5}
+    \end{matrix}
+\right )
+$
+\newpage
+
+\section*{Exercise 3}
+
+\subsection*{a}
 
 \end{document}
