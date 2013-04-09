@@ -823,4 +823,217 @@ $
 
 \subsection*{a}
 
+To find the volume of the parallelepiped we need to find the scalar triple product. We can do this by computing the absolute value of the determinant
+
+$
+\left |
+    \begin{matrix}
+        -1 & 0 & 2\\
+        3 & -1 & 3\\
+        4 & 0 & -1
+    \end{matrix}
+\right |
+=-1
+\left |
+    \begin{matrix}
+        -1 & 3\\
+        0 & -1
+    \end{matrix}
+\right |
+-0
+\left |
+    \begin{matrix}
+        3 & 3\\
+        4 & -1
+    \end{matrix}
+\right |
++2
+\left |
+    \begin{matrix}
+        3 & -1\\
+        4 & 0
+    \end{matrix}
+\right |
+=
+-1 + 0 + (2*4)
+=
+|7| = 7
+$
+
+The volume of the parallelpiped is 7.
+
+\subsection*{b}
+
+Let us view the system as Ax=b
+
+$A=
+\left (
+    \begin{matrix}
+        2 & 1 & 1\\
+        -1 & 0 & 2\\
+        3 & 1 & 3
+    \end{matrix}
+\right )
+, \hspace{5 mm}
+b=
+\left (
+    \begin{matrix}
+        4\\
+        2\\
+        -2
+    \end{matrix}
+\right )
+$
+
+$A_{1}(b)=
+\left (
+    \begin{matrix}
+        4 & 1 & 1\\
+        2 & 0 & 2\\
+        -2 & 1 & 3
+    \end{matrix}
+\right )
+,\hspace{5 mm}
+A_{2}(b) =
+\left (
+    \begin{matrix}
+        2 & 4 & 1\\
+        -1 & 2 & 2\\
+        3 & -2 & 3
+    \end{matrix}
+\right )
+,\hspace{5 mm} 
+A_{3}(b) =
+\left (
+    \begin{matrix}
+        2 & 1 & 4\\
+        -1 & 0 & 2\\
+        3 & 1 & -2
+    \end{matrix}
+\right )
+$
+
+Next we need to find determinants.\\
+$detA = 2
+\left |
+    \begin{matrix}
+        0 & 2\\
+        1 & 3
+    \end{matrix}
+\right |
+- 1
+\left |
+    \begin{matrix}
+        -1 & 2\\
+        3 & 3
+    \end{matrix}
+\right |
++ 1
+\left |
+    \begin{matrix}
+        -1 & 0\\
+        3 & 1
+    \end{matrix}
+\right |
+=
+2*(-2) - (-9) + (-1)
+=
+-4 + 9 - 1
+=
+4
+$
+
+$detA_{1}(b)= 4
+\left |
+    \begin{matrix}
+        0 & 2\\
+        1 & 3
+    \end{matrix}
+\right |
+- 1
+\left |
+    \begin{matrix}
+        2 & 2\\
+        -2 & 3
+    \end{matrix}
+\right |
++ 1
+\left |
+    \begin{matrix}
+        2 & 0\\
+        -2 & 1
+    \end{matrix}
+\right |
+=
+4*(-2) - 10 + 2
+=
+-16
+$
+
+$detA_{2}(b) = 2
+\left |
+    \begin{matrix}
+        2 & 2\\
+        -2 & 3
+    \end{matrix}
+\right |
+-4
+\left |
+    \begin{matrix}
+        -1 & 2\\
+        3 & 3
+    \end{matrix}
+\right |
++ 1
+\left |
+    \begin{matrix}
+        -1 & 2\\
+        3 & -2
+    \end{matrix}
+\right |
+=
+2*10 - 4(-9) + (-4)
+=
+20 + 36 - 4
+=
+52
+$
+
+$detA_{3}(b) = 2
+\left |
+    \begin{matrix}
+        0 & 2\\
+        1 & -2
+    \end{matrix}
+\right |
+- 1
+\left |
+    \begin{matrix}
+        -1 & 2\\
+        3 & -2
+    \end{matrix}
+\right |
++ 4
+\left |
+    \begin{matrix}
+        -1 & 0\\
+        3 & 1
+    \end{matrix}
+\right |
+=
+2*(-2) - (-4) + 4*(-1)
+=
+-4 + 4 - 4
+= -4
+$
+
+Since detA is non-zero the system has a unique solution, by applying Cramer's rule we get solutions:
+\begin{flalign*}
+    x_{1} = \frac{detA_{1}(b)}{detA} = \frac{-16}{4} = -4\\
+    x_{2} = \frac{detA_{2}(b)}{detA} = \frac{52}{4} = 13\\
+    x_{3} = \frac{detA_{3}(b)}{detA} = \frac{-4}{4} = -1
+\end{flalign*}
+
+\subsection*{c}
+
 \end{document}
