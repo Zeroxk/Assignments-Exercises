@@ -148,11 +148,11 @@ x_{4} &= free
 
 \subsubsection*{Basis and dimension for Col(B)}
 Basis: $\{ \{1,0,0,0\}, \{0,1,0,0\}, \{0,0,1,0\} \}$\\
-Dimension: by Theorem dim(Col(B)) =\# of vectors in basis = 3
+Dimension: by definition of dimension(p. 193 in our book) dim(Col(B)) =\# of vectors in basis = 3
 
 \subsubsection*{Basis and dimension for Row(B)}
 Basis: $\{ \{1,0,0,2,3\}, \{0,1,0,0,1\}, \{0,0,1,1,2\}\}\\$
-Dimension: by Theorem dim(Row(B)) = dim(Col(B)) = 3
+Dimension: by definition of dimension(p. 193 in our book) dim(Row(B)) = dim(Col(B)) = 3
 
 \subsubsection*{Basis and dimension for Null(B)}
 Basis: $\{ \{-2, 0, -1, 1\}, \{-3,-1,-2,0,1\} \}$\\
@@ -218,7 +218,7 @@ $
 Dimension: 2
 
 \subsubsection*{Rank of B}
-By Theorem
+By The Rank Theorem (p.194 in our book)
 \begin{flalign*}
     rank(B) + dim(Null(B)) &= n &\\
     rank(B) &= n-dim(Null(B))\\
@@ -601,7 +601,7 @@ $
 We cannot calculate $A^{2}$ because to multiply two matrices $A$ with dimensions $m \times k$ the second matrix $B$ needs to have dimensions $k \times n$ by theorem. In this exercise $B=A$ and since $A$ is not a square matrix it will not meet the requirements.
 
 \subsubsection*{$A^{-1}$?}
-We cannot calculate $A^{-1}$ because $A$ is not square, therefore $detA$ is not defined and by theorem it does not have an inverse
+We cannot calculate $A^{-1}$ because $A$ is not square, therefore $detA$ is not defined and by definition of determinant (p.203 in our book) it does not have an inverse
 
 \subsection*{c}
 We denote the matrix as $A$.\\
@@ -825,7 +825,7 @@ $
 
 \subsection*{a}
 
-To find the volume of the parallelepiped we need to find the scalar triple product. We can do this by computing the absolute value of the determinant
+To find the volume of the parallelepiped we need to find the scalar triple product (theorem 9, p. 221 in our book). We can do this by computing the absolute value of the determinant
 
 $
 \left |
@@ -1048,8 +1048,8 @@ A =
 \right )
 $
 
-We apply theorem about linear transformations and paralellogram form lecture 14, slide 10.\\
-$Area(T(II)) = |detA| \dot Area(II)$
+We apply theorem about linear transformations and paralellogram (theorem 10, p.223 in our book).\\
+$Area(T(S)) = |detA| \dot Area(S)$
 
 $|detA| = 6-(-4) = 10$\\
 Area of parallellogram is computed by absolute value of the determinant from the matrix $C$ formed by $\vec{a}$ and $\vec{b}$.
@@ -1309,14 +1309,12 @@ $H = H_{1} \cap H_{2}$
 
 To prove $H$ is a subspace of $\mathbb{R}^n$ it needs to satisfy the three properties for definition of subspace (p. 236 in our book):\\
 \begin{enumerate}[(a)]
-    \item The zero vector of $\mathbb{R}^n$ is in $H$
-    \item $H$ is closed under vector addition
-    \item $H$ is closed under multiplication by scalars
-\end{enumerate}
-
-\begin{enumerate}[(a)]
-    \item Since the zero vector of $\mathbb{R}^n$ is in $H_{1}$ and $H_{2}$ it will be in $H$ per definition of intersection
-    \item  s
+    \item \textbf{The zero vector of $\mathbb{R}^n$ is in $H$}\\
+			 Since the zero vector of $\mathbb{R}^{n}$ is in $H_{1}$ and $H_{2}$ it will be in $H$ per definition of intersection
+    \item \textbf{$H$ is closed under vector addition}\\
+			Take two vectors $\vec{u}$ and $\vec{v}$ from $H$, $\vec{u},\vec{v} \subset H_{1}$ and $\vec{u},\vec{v} \subset H_{2}$ . Since we know $H_{1}$ and $H_{2}$ are subspaces of $\mathbb{R}^{n}$ $\vec{u}+\vec{v}$ is closed under vector addition in $H_{1}$ and $H_{2}$ and therefore closed under vector addition in their intersection.
+    \item\textbf{ $H$ is closed under multiplication by scalars}\\
+			Take any vector $\vec{u} \subset H$ and scalar $c$, all vectors $c\vec{u}$ are in both $H_{1}$ and $H_{2}$ which are closed by scalar multiplication, therefore their intersection is too.
 \end{enumerate}
 
 \subsection*{c}
@@ -1325,6 +1323,7 @@ $\alpha = \{\alpha_{1}, \alpha_{2}, \alpha_{3}\}
 , \hspace{5 mm}
 \beta = \{\beta_{1}, \beta_{2}, \beta_{3}\}$
 
+\newpage
 \section*{Exercise 5}
 
 \subsection*{a}
@@ -1339,7 +1338,7 @@ $A=
 \right )
 $
 
-First we find the eigenvalues, we need to find $|detA$\\
+First we find the eigenvalues, we need to find $|detA|$\\
 $|detA|=
 \left |
     \begin{matrix}
@@ -1539,6 +1538,7 @@ $
 \right )
 $
 
+\newpage
 \section*{Exercise 6}
 
 \subsection*{a}
