@@ -1,0 +1,170 @@
+\documentclass{article}
+
+\usepackage{mathtools}
+\usepackage{parskip}
+\usepackage{amsfonts}
+
+\begin{document}
+
+\title{Eksamen MAT121 Våren 2011}
+
+\maketitle
+
+\section*{Oppgave 1}
+
+\subsection*{1}
+
+$A=[
+\begin{matrix}
+    1 & 2 & 1 & 4\\
+    2 & 2 & 4 & 7\\
+    -1 & 0 & -3 & -3
+\end{matrix}
+, \hspace{5 mm}
+b=
+\begin{matrix}
+    6\\
+    14\\
+    b
+\end{matrix}
+$
+
+\subsubsection*{a}
+Redusert trappeform av $A$:
+
+-2*rad1 + rad2\\
+$
+\begin{matrix}
+    1 & 2 & 1 & 4\\
+    0 & -2 & 2 & -1\\
+    -1 & 0 & -3 & -3
+\end{matrix}
+$
+
+rad1+rad3\\
+$
+\begin{matrix}
+    1 & 2 & 1 & 4\\
+    0 & -2 & 2 & -1\\
+    0 & 2 & -2 & 1
+\end{matrix}
+$
+
+rad2/-2\\
+$
+\begin{matrix}
+    1 & 2 & 1 & 4\\
+    0 & 1 & -1 & \frac{1}{2}\\
+    0 & 2 & -2 & 1
+\end{matrix}
+$
+
+-2*rad2 + rad1\\
+$
+\begin{matrix}
+    1 & 0 & 3 & 3\\
+    0 & 1 & -1 & \frac{1}{2}\\
+    0 & 2 & -2 & 1
+\end{matrix}
+$
+
+-2*rad2 + rad3\\
+$
+\begin{matrix}
+    1 & 0 & 3 & 3\\
+    0 & 1 & -1 & \frac{1}{2}\\
+    0 & 0 & 0 & 0
+\end{matrix}
+$
+
+\subsubsection*{b}
+
+Når $b !=-8$ finnes det ingen løsninger pga vi får en nullrad\\
+Når $b = -8$ finnes det uendelig mange løsninger pga en frivariabel\\
+Finnes aldri kun en løsning fordi det finnes alltid frivariabel
+
+Generell løsning ved $b=-8$:\\
+$x= [
+\begin{matrix}
+    x_{1}\\
+    x_{2}\\
+    x_{3}\\
+    x_{4}
+\end{matrix}
+]= [
+\begin{matrix}
+    8\\
+    -1\\
+    0\\
+    0
+\end{matrix}
+] +x_{3}[
+\begin{matrix}
+    -3\\
+    1\\
+    1\\
+    0
+\end{matrix}
+] +x_{4}[
+\begin{matrix}
+    -3\\
+    -\frac{1}{2}\\
+    0\\
+    1
+\end{matrix}
+]
+$
+
+\subsubsection*{c}
+
+Null(A): løser $Ax=0$\\
+$x_{1} = -3x_{3}-3x_{4}\\
+x_{2} = x_{3} - \frac{1}{2}x_{4}\\
+x_{3} = 0\\
+x_{4} = 0
+$
+
+$Null(A): span\{
+[
+\begin{matrix}
+    -3\\
+    1\\
+    0\\
+    0
+\end{matrix}
+], \hspace{5 mm}
+[
+\begin{matrix}
+    -3\\
+    -\frac{1}{2}\\
+    0\\
+    0
+\end{matrix}
+]
+\}
+$
+Dimension Null(A): 2
+
+Col(A): Pivot kolonner fra rad redusert $A$, kolonne 1 og 2\\
+$Col(A) = \{ |
+\begin{matrix}
+    1\\
+    2\\
+    -1
+\end{matrix}
+|, \hspace{5 mm}
+|
+\begin{matrix}
+    2\\
+    2\\
+    0
+\end{matrix}
+| \}
+$
+Dimensjon til Col(A): 2
+
+$Rank(A) = n-dim(Null(A)) = 4-2 = 2$
+
+
+
+\end{document}
