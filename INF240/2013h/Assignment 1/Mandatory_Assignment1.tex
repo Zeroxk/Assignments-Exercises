@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{parskip}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+\begin{document}
+
+\title{INF240 Mandatory Assignment 1}
+\author{David Huynh}
+
+\maketitle
+
+\section*{Problem 1}
+
+\subsection*{a)}
+Fermat's theorem says that for $p$ prime and an integer $a$: $a^{p} \equiv a (mod p)$.\\
+If $a$ does not divide $p$ then Fermat's theorem can be stated as: $a^{p-1} \equiv 1 (mod p)$-
+
+To show that $n=55$ is a composite number then we can use the second formula and test different $a$s, if $n$ is a composite number then there is some $a$ that the relation does not hold.
+
+\begin{tabular}{l | c | c | r}
+$a$ & $a^{p-1} (mod p)$ & $a^{p-1} \equiv 1 (mod p)?$ \\ \hline
+
+1 & 1 & yes\\
+2 & $2^{54} (mod 55) = 49$ & no
+\end{tabular}
+
+Thus $n=55$ is not prime and therefore composite
+
+\subsection*{b)}
+
+$n=341$ \hspace{5 mm} $k=3$\\
+$n-1=340= 2^{2} \cdotp 85$ \hspace{5 mm} $s=2 \hspace{5mm} d=85$
+
+\begin{tabular}{c | c | c | c | c | c}
+Iteration & $a$ & $x$ & $x=1$ or $x=n-1?$ & $x_{2}$ & $x_{2}=1$ or $x_{2}=n-1?$\\ \hline
+
+1 & 2 & $2^{85} (mod 341) = 32$ & no & $32^{2} (mod 341) = 1$ & yes\\
+2 & 3 & $3^{85} (mod 341) = 254$ & no & $254^{2} (mod 341) = 67$ & no\\
+3 & 4 & $4^{85} (mod 341) = 1$ & yes &  &
+\end{tabular}
+
+$n=341$ is composite since the algorithm stops for $a=2,4$
+\end{document}
