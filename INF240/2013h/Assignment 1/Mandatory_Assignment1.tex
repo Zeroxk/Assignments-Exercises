@@ -16,15 +16,9 @@
 Fermat's theorem says that for $p$ prime and an integer $a$: $a^{p} \equiv a (mod p)$.\\
 If $a$ does not divide $p$ then Fermat's theorem can be stated as: $a^{p-1} \equiv 1 (mod p)$-
 
-To show that $n=55$ is a composite number then we can use the second formula and test different $a$, if $n$ is a composite number then there is some $a$ that the relation does not hold.
-
-\begin{tabular}{l | c | c | r}
-$a$ & $a^{p-1} (mod p)$ & $a^{p-1} \equiv 1 (mod p)?$ \\ \hline
-
-1 & 1 & yes\\
-2 & $2^{54} (mod 55) = 49$ & no
-\end{tabular}
-
+To show that $n=55$ is composite we only need to test if $2^{n-1}
+\equiv 1 (modn)$, this rule is given on p.80 in the textbook.\\
+$2^{55-1} (mod$) $55 = 49 \neq 1$.\\
 Thus $n=55$ is not prime and therefore composite
 
 \subsection*{b)}
@@ -48,7 +42,17 @@ $x^{2} \equiv y^{2} (mod n)$ is a square congruence, from the principle on p.176
 
 Let us use a relation we obtained from b):\\
 $32^{2} \equiv 1^{2} (mod$ $341)$\\
+Find gcd with Euclidian algorithm which states $gcd(a,b) = gcd(b, a mod b)$
 gcd(32-1, 341) = 31\\
 gcd(32+1, 341) = 11\\
 $341 = 11 \cdotp 31$
+
+\section*{Problem 2}
+
+\subsection*{b)}
+
+In the case where $p \equiv 3(mod$ $4)$ there is a formula $x = \pm c^{(p+1)/4} (mod$ $p)$ we can use.
+
+
+
 \end{document}
