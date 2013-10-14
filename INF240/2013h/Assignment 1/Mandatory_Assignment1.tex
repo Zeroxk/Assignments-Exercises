@@ -16,7 +16,7 @@
 Fermat's theorem says that for $p$ prime and an integer $a$: $a^{p} \equiv a (mod p)$.\\
 If $a$ does not divide $p$ then Fermat's theorem can be stated as: $a^{p-1} \equiv 1 (mod p)$-
 
-To show that $n=55$ is a composite number then we can use the second formula and test different $a$s, if $n$ is a composite number then there is some $a$ that the relation does not hold.
+To show that $n=55$ is a composite number then we can use the second formula and test different $a$, if $n$ is a composite number then there is some $a$ that the relation does not hold.
 
 \begin{tabular}{l | c | c | r}
 $a$ & $a^{p-1} (mod p)$ & $a^{p-1} \equiv 1 (mod p)?$ \\ \hline
@@ -41,4 +41,14 @@ Iteration & $a$ & $x$ & $x=1$ or $x=n-1?$ & $x_{2}$ & $x_{2}=1$ or $x_{2}=n-1?$\
 \end{tabular}
 
 $n=341$ is composite since the algorithm stops for $a=2,4$
+
+\subsection*{c)}
+
+$x^{2} \equiv y^{2} (mod n)$ is a square congruence, from the principle on p.176 in the textbook $gcd(x-y,n)$ is a nontrivial factor of $n$.
+
+Let us use a relation we obtained from b):\\
+$32^{2} \equiv 1^{2} (mod$ $341)$\\
+gcd(32-1, 341) = 31\\
+gcd(32+1, 341) = 11\\
+$341 = 11 \cdotp 31$
 \end{document}
