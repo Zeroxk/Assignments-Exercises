@@ -42,17 +42,57 @@ $x^{2} \equiv y^{2} (mod n)$ is a square congruence, from the principle on p.176
 
 Let us use a relation we obtained from b):\\
 $32^{2} \equiv 1^{2} (mod$ $341)$\\
-Find gcd with Euclidian algorithm which states $gcd(a,b) = gcd(b, a mod b)$
-gcd(32-1, 341) = 31\\
-gcd(32+1, 341) = 11\\
+Find gcd with a version of Euclidian algorithm which states: 
+\begin{verbatim}
+procedure gcd(a,b) {
+		if(a<b) swap(a,b)
+		if(b ==0) return a
+		return gcd(b, a mod b)
+}
+\end{verbatim}
+This is equivalent to regular Euclidian algorithm per definition of modulus.
+$
+gcd(32-1, 341) = gcd(31, 341 \: mod \: 31) =  gcd(31,0). a = 31\\
+gcd(32+1, 341) = gcd(33, 341 \: mod \: 33) =  gcd(33,11) = gcd(11, 33 \: mod \: 11) = gcd(11,0). a = 11\\
+$
 $341 = 11 \cdotp 31$
 
 \section*{Problem 2}
 
+\subsection*{a)}
+
+
 \subsection*{b)}
 
-In the case where $p \equiv 3(mod$ $4)$ there is a formula $x = \pm c^{(p+1)/4} (mod$ $p)$ we can use.
+In the case where $p \equiv 3(mod \: 4)$ the solutions are given by the formula $x = \pm c^{(p+1)/4} (mod\:p)$ on lectures notes for chapter 3 slide 42.\\
+$
+x^{2} \equiv 5\:(mod \: 11)\\
+x = \pm 5^{(11+1)/4}(mod \: 11)\\
+x_{1} = 5^{3}(mod \: 11) = 4\\
+x_{2} = -5^{3}(mod \: 11) = 7
+$
 
+$
+x^{2} \equiv 12(mod \: 23)\\
+x = \pm 12^{(23+1)/4}(mod \: 23)\\
+x_{1} = 12^{6}(mod \: 23) = 9\\
+x_{2} = -12^{6}(mod \: 23) = 14
+$
+
+\subsection*{c)}
+Chinese remainder theorem
+
+\section*{Problem 3}
+
+$p = 19, \hspace{5 mm} q = 23\\
+n = pq = 437 \hspace{5 mm} \phi(n) = (p-1)(q-1) = 396$
+
+\subsection*{a)}
+$e = 7$\\
+I made the program EEA.cpp with $a=7$ and $b=396$ to compute private exponent $d=283$
+
+RSA encryption is done by $c \equiv m^{e}(mod \: n)$, so with $m=5$ encryption is as follows:\\
+$c(5) = 5^{7}(mod \: 437) = 339$
 
 
 \end{document}
