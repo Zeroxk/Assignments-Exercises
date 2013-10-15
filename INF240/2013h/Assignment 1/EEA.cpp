@@ -1,4 +1,4 @@
-//Succesfully compiled with Visual Studio 2012 C++ compiler and g++4.8.1
+//Succesfully compiled with Visual Studio 2012 C++ compiler and gcc4.8.1
 
 #include <cstdio>
 #include <vector>
