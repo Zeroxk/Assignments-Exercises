@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//There is no normalization so x or y will be minus
 pair<LL,LL> eea(LL a, LL b) {
     
     if(a<b) {
