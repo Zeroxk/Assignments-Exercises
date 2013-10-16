@@ -30,11 +30,9 @@ $n-1=340= 2^{2} \cdotp 85$ \hspace{5 mm} $s=2 \hspace{5mm} d=85$
 Iteration & $a$ & $x$ & $x=1$ or $x=n-1?$ & $x_{2}$ & $x_{2}=1$ or $x_{2}=n-1?$\\ \hline
 
 1 & 2 & $2^{85} (mod 341) = 32$ & no & $32^{2} (mod 341) = 1$ & yes\\
-2 & 3 & $3^{85} (mod 341) = 254$ & no & $254^{2} (mod 341) = 67$ & no\\
-3 & 4 & $4^{85} (mod 341) = 1$ & yes &  &
 \end{tabular}
 
-$n=341$ is composite since the algorithm stops for $a=2,4$
+$n=341$ is composite since the algorithm stops for $a=2$
 
 \subsection*{c)}
 
@@ -60,7 +58,10 @@ $341 = 11 \cdotp 31$
 \section*{Problem 2}
 
 \subsection*{a)}
-
+$x^{2} \equiv c (mod \: p)$\\
+We need to show that the equation only has a solution when $c^{(p-1)/2} = 1 (mod \: p)$.\\
+Raise both sides to the power of $(p-1)/2$ and we obtain the following equation:\\
+$x^{p-1} \equiv c^{(p-1)/2} (mod \: p)$, by Fermat's theorem $x^{p-1} \equiv 1 (mod \: p)$ so $c^{(p-1)/2}$ must equal $1 (mod \: p)$ or there are no solutions.
 
 \subsection*{b)}
 
@@ -81,8 +82,8 @@ $
 
 \subsection*{c)}
 
-Chinese remainder theorem (CRT) takes a sequence of coprime integers $m_{1}, m_{2} \ldots m_{r}=M$ and another set of integers $a_{1}, a_{2} \ldots a_{r}=A$\\
-It then creates a system of $r$ linear congruences of the form $x \equiv a_{i} (mod \: m_{i})$ and finds a unique solution $x \: mod \: M$
+Chinese remainder theorem (CRT) takes a sequence of coprime integers $m_{1}, m_{2} \ldots m_{r}$ and another set of integers $a_{1}, a_{2} \ldots a_{r}$\\
+It then creates a system of $r$ linear congruences of the form $x \equiv a_{i} (mod \: m_{i})$ and finds a unique solution $x \: mod \: (m_{1}m_{2}\ldots m_{r}$
 
 We want to solve $x^{2} \equiv 104 (mod \: 253)$\\
 Notice that $253 = 11 \cdotp 23$ so we can set up the system:
@@ -112,6 +113,13 @@ $x_{2} = 4 \cdotp 23 - 9 \cdotp 11 \cdotp 21 (mod \: 253) = -1987 (mod \: 253) =
 $x_{3} = -4 \cdotp 23 + 9 \cdotp 11 \cdotp 21 (mod \: 253) = 1987 (mod \: 253) = 216$\\
 $x_{4} = -4 \cdotp 23 - 9 \cdotp 11 \cdotp 21 (mod \: 253) = -2171 (mod \: 253) = 106$\\
 
+\subsection*{d)}
+By statement in a) we must choose $c$ such that $c^{(p-1)/2} \neq 1(mod \: p)$, so:\\
+$c^{(253-1)/2} \neq 1 (mod \: 253)$
+$c^{126} \neq 1 (mod \: 253)$
+
+One solution is $c=2$, quick check shows $2^{126} mod \: 253 = 9 \neq 1$.
+
 \section*{Problem 3}
 
 $p = 19, \hspace{5 mm} q = 23\\
@@ -126,5 +134,83 @@ $c(5) = 5^{7}(mod \: 437) = 339$
 
 \subsection*{b)}
 
-We need to choose an $e_{A}$ such that $1 < e_{A} < \phi(n)$ and $gcd(e_{A}, \phi(n)) = 1$, $e_{A} = 5$ satisfies these conditions
+We need to choose an $e_{A}$ such that $1 < e_{A} < \phi(n)$ and $gcd(e_{A}, \phi(n)) = 1$, $e_{A} = 5$ satisfies these conditions. Our $d_{A}$ is then $d_{A} \equiv e_{A}^{-1} (mod \: \phi(n))$, again I use the program EEA.cpp with $a=e_{A}=5$ and $b=\phi(n)=396$ to compute $d_{A}=317$.
+
+By description on p.245 in the textbook, signing is done by the formula $y \equiv m^{d_{A}} (mod \: n)$, plugging in for $m=2$ gives us:\\
+$y \equiv 2^{317} (mod \: 437) = 167$.
+
+Verification is also described on p.245 and is given by testing if $z \equiv y^{e_{A}} (mod \: n) = m$, where $e_{A}$ and $n$ are respectively the sender's public key and product of $pq$.\\
+$z \equiv 167^{5} (mod \: 437) = 2$
+
+\section*{Problem 4}
+
+$3^{x} = 5(mod \: 29)$
+
+\subsection*{a)}
+Using the Pohlig-Hellman algorithm:
+
+$29-1 = 2^{2} \cdotp 7 \hspace{5mm} \alpha = 3 \hspace{5mm} \beta = 5$
+
+$5 (mod \: 2^{2})$ and $5 (mod \: 7$
+
+$q=2, \hspace{5mm} r=2$ so we must now find $x mod \: 2^{2}$\\
+$x \equiv x_{0} + 2x_{1} (mod \: 4)$\\
+$\beta^{(p-1)/q} = 5^{14} = 1 (mod \: 29)$\\
+$(3^{14})^{x_{0}} = 28^{x_{0}} (mod \: 29)$\\
+We must find $x_{0}$ such that the alpha and beta expressions are equivalent.
+Try $x_{0} = 0$ gives $1 (mod \: 29)$ so $x_{0} = 0$
+
+Now we must find $x_{1}$\\
+$\beta_{1} \equiv \beta \alpha^{-x_{0}} \equiv 5 \cdotp 3^{-0} \equiv 5$\\
+$\beta_{1}^{(p-1)/2^{2}} \equiv 5^{7} \equiv 28 (mod \: 29)$\\
+$(\alpha^{(p-1)/q})^{x_{1}} \equiv 28^{x_{1}} (mod \: 29) \Rightarrow x_{1} = 1$
+
+$x \equiv x_{0} + 2x_{1} \equiv 0 + 2 \equiv 2 (mod \: 4)$
+
+Next to solve $x mod \: 7$\\
+$q=7, \hspace{5mm} r=1$\\
+$x \equiv x_{0} (mod \: 7)$\\
+$\beta^{(p-1)/q} \equiv 5^{4} \equiv 16 (mod \: 29)$\\
+$\alpha^{(p-1)/q} \equiv 3^{4} \equiv 23 (mod \: 29)$\\
+
+Trying all possible values of $x_{0}$ we get:\\
+$23^{2} \equiv 7, \hspace{5mm} 23^{3} \equiv 16 (mod \: 29) \Rightarrow x_{0} = 3$\\
+$x \equiv 3 (mod \: 7)$
+
+Using CRT to combine $x \equiv 2 (mod \: 4)$ and $x \equiv 3 (mod \: 7$ gives us $x \equiv 10 (mod \: 29)$
+
+\subsection*{b)}
+
+Using the index-calculus method:\\
+$p=29, \hspace{5mm} \alpha=3, \hspace{5mm} B=\{2,3,5,7\}$
+
+Precomputation:\\
+$
+3^{1} \equiv 3 (mod \: 29)\\
+3^{2} \equiv 3^{2} (mod \: 29)\\
+3^{3} \equiv 3^{3} (mod \: 29\\
+3^{6} \equiv 2^{2} (mod \: 29)\\
+3^{7} \equiv 2^{2} \cdotp 3 (mod \: 29)
+$
+
+We get:\\
+$
+1 \equiv L_{3}(3) (mod \: 28)\\
+2 \equiv 2L_{3}(3) (mod \: 28)\\
+3 \equiv 3L_{3}(3) (mod \: 28)\\
+6 \equiv 2L_{3}(2) (mod \: 28)\\
+7 \equiv 2L_{3}(2) + L_{3}(3) (mod \: 28)
+$
+
+\subsection*{c)}
+$p = 29, \hspace{5mm} \alpha=3$, $\alpha$ being a primitive root can be shown by successively computing $\alpha^{i} (mod \: p)$ and increasing $i$ by 1 several times and it will generate the complete order mod p, that is, all numbers from 0 to p-1 mod p.
+
+Choosing random $x=5, \hspace{5mm} y=7$\\
+Next we compute $\alpha^{x} (mod \: p)$ and $\alpha^{y} (mod \: p)$:\\
+$3^{5} (mod \: 29) = 11, \hspace{5mm} 3^{7} (mod \: 29) = 12$\\
+
+Lastly we compute they key $K$ by $K \equiv (\alpha^{y})^{x} (mod \: p)$ and $K \equiv (\alpha^{x})^{y} (mod \: p)$:\\
+$(3^{7})^{5} (mod \: 29) = 12$\\
+$(3^{5})^{7} (mod \: 29) = 12$
+
 \end{document}
