@@ -57,8 +57,8 @@ for i in funcs:
     if i[1] == "G":
         singleVars.append(int(i[0]))
     else:
-        tmp = i[0].split(',')
-        tmp.append(i[1])
+        tmp = map(lambda x: int(x), i[0].split(','))
+        tmp.append(map(lambda x: int(x),i[1]))
         boolFuncTT.append(tmp)
 
 print boolFuncTT
