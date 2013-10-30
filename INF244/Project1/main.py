@@ -1,8 +1,15 @@
-import os
+import sys
 import random
 import math
+import itertools
 
-global noIterations,noIndepDec,codeRate,bitEnergy,noise,root,msgPassVariant
+
+#Creates full boolean truth table given n
+def createTT(n):
+#print a
+    l = map(list,list(itertools.product([0,1], repeat=n)))
+    l = map(lambda x: x[::-1], l)
+    return l
 
 #Generate random numbers according to gaussian distribution using box-muller method
 def genAWGN():
@@ -31,24 +38,25 @@ def genAWGN():
 #####  MAIN  ######
 ###################
 
-with open('MP.txt') as f:
+with open(sys.argv[1]) as f:
     lines = []
     for line in f:
         lines.append(line)
     lines = [line.rstrip('\n') for line in lines]
+    lines = iter(lines)
 
-noVars = int(lines[0])
-noStateVars = int(lines[1])
-noFuncs = int(lines[2])
+noVars = int(lines.next())
+noStateVars = int(lines.next())
+noFuncs = int(lines.next())
 
-lines = lines[3:]
 #print lines
 funcs = []
 for i in xrange(0,noFuncs):
-    funcs.append(lines[i])
+    funcs.append(lines.next())
 
 funcs = [(x.split(']')[0].lstrip('['),x.split(']')[1]) for x in funcs] 
-print funcs
+#print funcs
+
 
 boolFuncTT = []
 singleVars = []
@@ -58,36 +66,39 @@ for i in funcs:
         singleVars.append(int(i[0]))
     else:
         tmp = map(lambda x: int(x), i[0].split(','))
-        tmp.append(map(lambda x: int(x),i[1]))
+        tmp.append(map(lambda x: int(x),i[1].split(',')))
         boolFuncTT.append(tmp)
 
 print boolFuncTT
 print singleVars
 
-decMode = lines[noFuncs]
+for i in boolFuncTT:
+    n = len(i)-1
+    l = createTT(n)
+    print "Printing truth table for " + str(i)
+    for ind,j in enumerate(l):
+        print str(j) + " " + str(i[len(i)-1][ind])
+
+decMode = lines.next()
 
 print "DecMode is: " + decMode
 
+noIterations = noIndepDec = codeRate = bitEnergy = noise = root = msgPassVariant = 0
 if decMode == "A":
-    noIterations = int(lines[noFuncs+1])
-    noIndepDec = int(lines[noFuncs+2])
-    codeRate = float(lines[noFuncs+3])
-    bitEnergy = float(lines[noFuncs+4])
-    noise = float(lines[noFuncs+5])
+    noIterations = int(lines.next())
+    noIndepDec = int(lines.next())
+    codeRate = float(lines.next())
+    bitEnergy = float(lines.next())
+    noise = float(lines.next())
 elif decMode == "B":
-    root = int(lines[noFuncs+1])
+    root = lines.next()
 elif decMode == "C":
-    msgPassVariant = lines[noFuncs+1]
-    noIndepDec = int(lines[noFuncs+2])
-    codeRate = float(lines[noFuncs+3])
-    bitEnergy = float(lines[noFuncs+4])
-    noise = float(lines[noFuncs+5])
-'''
-print noVars
-print noStateVars
-print noFuncs
-print funcs
-'''
+    msgPassVariant = lines.next()
+    noIndepDec = int(lines.next())
+    codeRate = float(lines.next())
+    bitEnergy = float(lines.next())
+    noise = float(lines.next())
+
 '''
 for i in range(0,100):
     z = math.sqrt(noise/2.0)*genAWGN()
