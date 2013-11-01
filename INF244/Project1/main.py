@@ -3,14 +3,6 @@ import random
 import math
 import itertools
 
-
-#Creates full boolean truth table given n
-def createTT(n):
-#print a
-    l = map(list,list(itertools.product([0,1], repeat=n)))
-    l = map(lambda x: x[::-1], l)
-    return l
-
 #Generate random numbers according to gaussian distribution using box-muller method
 def genAWGN():
 
@@ -65,8 +57,8 @@ for i in funcs:
     if i[1] == "G":
         singleVars.append(int(i[0]))
     else:
-        tmp = map(lambda x: int(x), i[0].split(','))
-        tmp.append(map(lambda x: int(x),i[1].split(',')))
+        tmp = map(int, i[0].split(','))
+        tmp.append(map(int,i[1].split(',')))
         boolFuncTT.append(tmp)
 
 print boolFuncTT
@@ -74,10 +66,12 @@ print singleVars
 
 for i in boolFuncTT:
     n = len(i)-1
-    l = createTT(n)
     print "Printing truth table for " + str(i)
-    for ind,j in enumerate(l):
-        print str(j) + " " + str(i[len(i)-1][ind])
+    it = itertools.product([0,1], repeat=n)
+    ind = 0
+    for j in it:
+        print str(j[::-1]) + " " + str(i[len(i)-1][ind])
+        ind += 1
 
 decMode = lines.next()
 
