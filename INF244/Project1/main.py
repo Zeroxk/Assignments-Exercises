@@ -30,7 +30,12 @@ def genAWGN():
 #####  MAIN  ######
 ###################
 
-with open(sys.argv[1]) as f:
+inFile = 'MP.txt'
+
+if(len(sys.argv) == 2):
+    inFile = sys.argv[1]
+
+with open(inFile) as f:
     lines = []
     for line in f:
         lines.append(line)
@@ -38,12 +43,12 @@ with open(sys.argv[1]) as f:
     lines = iter(lines)
 
 noVars = int(lines.next())
-noStateVars = int(lines.next())
+noStateVars = lines.next()
 noFuncs = int(lines.next())
 
 #print lines
 funcs = []
-for i in xrange(0,noFuncs):
+for i in range(noFuncs):
     funcs.append(lines.next())
 
 funcs = [(x.split(']')[0].lstrip('['),x.split(']')[1]) for x in funcs] 
@@ -58,7 +63,7 @@ for i in funcs:
         singleVars.append(int(i[0]))
     else:
         tmp = map(int, i[0].split(','))
-        tmp.append(map(int,i[1].split(',')))
+        tmp.append(i[1].split(','))
         boolFuncTT.append(tmp)
 
 print boolFuncTT
@@ -70,7 +75,7 @@ for i in boolFuncTT:
     it = itertools.product([0,1], repeat=n)
     ind = 0
     for j in it:
-        print str(j[::-1]) + " " + str(i[len(i)-1][ind])
+        print str(list(j[::-1])) + " " + str(i[len(i)-1][ind])
         ind += 1
 
 decMode = lines.next()
