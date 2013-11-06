@@ -3,6 +3,7 @@ import itertools
 x0 = [[0,1], [1,1]]
 x1 = [[1,2], [1,1]]
 x2 = [[1,3], [1,1]]
+
 f0 = [[0], [1,2]]
 f1 = [[0,1,2],[1,2,3,4,5,6,7,8]]
 f2 = [[1], [3,1]]
@@ -33,10 +34,12 @@ visitedX = list(itertools.repeat(-1, len(x)))
 
 def dfs(curr, prev, flag):
     print "Curr: " + str(curr) + " Prev: " + str(prev) + " Flag: " + flag
-    res = [curr]
+    res = []
     if flag == 'X':
         visitedX[curr] = 1
         print x[curr]
+        if len(x[curr][0]) == 1:
+            return x[curr][1]
         for i in x[curr][0]:
             print i
             if visitedF[i] == -1:
@@ -47,6 +50,8 @@ def dfs(curr, prev, flag):
     elif flag == 'F':
         visitedF[curr] = 1
         print f[curr]
+        if len(f[curr][0]) == 1:
+                return f[curr][1]
         for i in f[curr][0]:
             print i
             if visitedX[i] == -1:
