@@ -1,4 +1,5 @@
 import itertools
+import collections
 import time
 
 x0 = [[0,1], [1,1]]
@@ -34,60 +35,94 @@ global visitedF, visitedX
 visitedF = list(itertools.repeat(-1, len(f)))
 visitedX = list(itertools.repeat(-1, len(x)))
 
-#Flag tells whether we are in X or F list, X=0, F=1
-def dfs(curr, prev, flag):
-    fc = 'X' if flag == 0 else 'F'
-    print "Curr: " + str(curr) + " Prev: " + str(prev) + " Flag: " + fc
-    
-    res = []
-    visited = []
-    otherVis = []
-    nodes = []
-    if flag == 0:
-        visited = visitedX
-        otherVis = visitedF
-        nodes = x
-    elif flag == 1:
-        visited = visitedF
-        otherVis = visitedX
-        nodes = f
-
-    visited[curr] = 1
-    print nodes[curr]
-
-    if len(nodes[curr][0]) == 1 and nodes[curr][0][0] == prev:
-        print str(curr) + " has Unit marginal"
-        return nodes[curr][1]
-    for i in nodes[curr][0]:
-        print i
-        if otherVis[i] == -1:
-            print "Visiting: " + str(i)
-#time.sleep(5)
-            res.append(dfs(i,curr, (flag + 1) % 2))
+def flatten(l):
+    for el in l:
+    #print el[0]
+        if not isinstance(el,collections.Iterable):         
+            #print el
+            yield el
+        elif isinstance(el[0], collections.Iterable):
+            for sub in flatten(el):
+                yield sub
         else:
-            print str(i) + " already visited"
-    return computeMarginal(nodes[curr][0], curr, res)
-#return res
-
-print dfs(0,-1,0)
+            yield el
 
 def computeMarginal(neigh,node, res):
     TT = genTT(len(neigh))
     ind = 0
-    offset = 2**len(neigh)
     ones = zeroes =  0
+    indNode = neigh.index(node)
+    
+    print len(neigh)
     for i in TT:
         prod = 1
-        for j in res:
-            prod *= j[ind]
-            ind += 1
-        indNode = neigh.index(node)
-        if indNode == 0:
+        print i
+        for j in flatten(res):
+            print j
+            prod *= j[ind%len(j)]
+            
+        ind += 1
+        
+        if i[indNode] == 0:
             zeroes += prod
         else:
             ones += prod
-    print "Marginal for " + str(node) + " is " + str([ones,zeroes])
+    print "Marginal for " + str(node) + " is " + str([zeroes,ones])
     
-    return [ones,zeroes]
+    return [zeroes,ones]
+
+#Flag tells whether we are in X or F list, X=0, F=1
+def dfs(curr, prev, flag):
+    res = []
+    visited = []
+    otherVis = []
+    neighs = []
+    fc = 0
+    notFc = 0
+    if flag == 0:
+        visited = visitedX
+        otherVis = visitedF
+        neighs = x[curr]
+        fc = 'X'
+        notFc = 'F'
+    elif flag == 1:
+        visited = visitedF
+        otherVis = visitedX
+        neighs = f[curr]
+        fc = 'F'
+        notFc = 'X'
+    print "Curr: " + str(curr) + " Prev: " + str(prev) + " Flag: " + fc
+    
+    visited[curr] = 1
+    print neighs
+
+    if len(neighs[0]) == 1 and neighs[0][0] == prev:
+        print str(fc) + "_" + str(curr) + " has Unit marginal " + str(neighs[1])
+        return neighs[1]
+
+    for i in neighs[0]:
+        #print i
+        if otherVis[i] == -1:
+            print "Visiting: " + str(notFc) + "_" + str(i)
+#time.sleep(5)
+            res.append(dfs(i,curr, (flag + 1) % 2))
+        else:
+            print str(notFc) + "_" + str(i) + " already visited"
+
+    if len(res) == len(neighs[0]):
+        print "Computing marginal for " + str(fc) + "_" + str(curr)
+        return computeMarginal(neighs[0], curr, res)
+    else:
+        return res
+    
+#return res
+
+#print dfs(1,-1,1)
+#t = [[1,2,3,4,5,6,7,8], [3,3,1,1,3,3,1,1], [2,2,2,2,3,3,3,3]]
+#t2 = [0,1,2]
+
+#print computeMarginal(t2,0,t)
+
+
 
 
