@@ -52,17 +52,22 @@ def computeMarginal(neigh,node, res):
     ind = 0
     ones = zeroes =  0
     indNode = neigh.index(node)
-    
+    cnt = 1
+
     print len(neigh)
     for i in TT:
         prod = 1
         print i
         for j in flatten(res):
             print j
-            prod *= j[ind%len(j)]
+            print "cnt is " + str(cnt)
+            prod *= j[0] if i[cnt] == 0 else j[1]
+            #prod *= j[ind%len(j)]
             
         ind += 1
-        
+        cnt += 1%(len(neigh)-1)
+        if cnt == 0:
+            cnt = 1
         if i[indNode] == 0:
             zeroes += prod
         else:
@@ -117,7 +122,7 @@ def dfs(curr, prev, flag):
     
 #return res
 
-#print dfs(1,-1,1)
+print dfs(1,-1,1)
 #t = [[1,2,3,4,5,6,7,8], [3,3,1,1,3,3,1,1], [2,2,2,2,3,3,3,3]]
 #t2 = [0,1,2]
 
