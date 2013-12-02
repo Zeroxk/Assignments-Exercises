@@ -47,28 +47,36 @@ def flatten(l):
         else:
             yield el
 
-def computeMarginal(neigh,node, res):
+def computeMarginal(neigh,node, res, nodeVals):
     TT = genTT(len(neigh))
     ind = 0
     ones = zeroes =  0
     indNode = neigh.index(node)
-    cnt = 1
-
-    print len(neigh)
+    #cnt = 1
+    #print "Indnode: " + str(indNode)
+    #print len(neigh)
     for i in TT:
         prod = 1
         print i
+        cnt = 0
         for j in flatten(res):
             print j
-            print "cnt is " + str(cnt)
-            prod *= j[0] if i[cnt] == 0 else j[1]
-            #prod *= j[ind%len(j)]
+
+            if cnt != 0:
+                #print "cnt is " + str(cnt)
+                print "i[cnt]: " + str(i[cnt])
+                prod *= j[0] if i[cnt] == 0 else j[1]
+
+            cnt = (cnt+1)%(len(neigh))
             
+            #prod *= j[ind%len(j)]
+        
+        #print "nodeVals: " + str(nodeVals[ind])
+        prod *= nodeVals[ind]
+        print "Prod " + str(prod)
         ind += 1
-        cnt += 1%(len(neigh)-1)
-        if cnt == 0:
-            cnt = 1
-        if i[indNode] == 0:
+            
+        if i[0] == 0:
             zeroes += prod
         else:
             ones += prod
@@ -116,7 +124,7 @@ def dfs(curr, prev, flag):
 
     if len(res) == len(neighs[0]):
         print "Computing marginal for " + str(fc) + "_" + str(curr)
-        return computeMarginal(neighs[0], curr, res)
+        return computeMarginal(neighs[0], curr, res, neighs[1])
     else:
         return res
     
@@ -125,7 +133,6 @@ def dfs(curr, prev, flag):
 print dfs(1,-1,1)
 #t = [[1,2,3,4,5,6,7,8], [3,3,1,1,3,3,1,1], [2,2,2,2,3,3,3,3]]
 #t2 = [0,1,2]
-
 #print computeMarginal(t2,0,t)
 
 
