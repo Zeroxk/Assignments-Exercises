@@ -61,10 +61,10 @@ def computeMarginal(neigh,node, res, nodeVals):
         for j in flatten(res):
             print j
 
-            #if cnt != 0:
+            if cnt != 0:
                 #print "cnt is " + str(cnt)
-            print "i[cnt]: " + str(i[cnt])
-            prod *= j[0] if i[cnt] == 0 else j[1]
+                print "i[cnt]: " + str(i[cnt])
+                prod *= j[0] if i[cnt] == 0 else j[1]
 
             cnt = (cnt+1)%(len(neigh))
             
@@ -84,7 +84,7 @@ def computeMarginal(neigh,node, res, nodeVals):
     return [zeroes,ones]
 
 #Flag tells whether we are in X or F list, X=0, F=1
-def dfs(curr, prev, flag):
+def rootedTree(curr, prev, flag):
     res = []
     visited = []
     otherVis = []
@@ -107,7 +107,7 @@ def dfs(curr, prev, flag):
     
     visited[curr] = 1
     print neighs
-
+    #res.append(neighs[1])
     if len(neighs[0]) == 1 and neighs[0][0] == prev:
         print str(fc) + "_" + str(curr) + " has Unit marginal " + str(neighs[1])
         return neighs[1]
@@ -117,7 +117,7 @@ def dfs(curr, prev, flag):
         if otherVis[i] == -1:
             print "Visiting: " + str(notFc) + "_" + str(i)
 #time.sleep(5)
-            res.append(dfs(i,curr, (flag + 1) % 2))
+            res.append(rootedTree(i,curr, (flag + 1) % 2))
         else:
             print str(notFc) + "_" + str(i) + " already visited"
 
@@ -165,8 +165,8 @@ for i in funcs:
     else:
         boolFuncTT.append([map(int, i[0].split(',')),map(int,i[1].split(','))])
 
-print boolFuncTT
-print singleVars
+#print boolFuncTT
+#print singleVars
 
 x = [[] for _ in range(noVars)]
 f = boolFuncTT
@@ -198,7 +198,6 @@ for i in boolFuncTT:
 decMode = lines.next()
 
 print "DecMode is: " + decMode
-
 noIterations = noIndepDec = codeRate = bitEnergy = noise = root = msgPassVariant = 0
 if decMode == "A":
     noIterations = int(lines.next())
@@ -213,14 +212,15 @@ elif decMode == "B":
             #dfs(i,-1,0)
         print "Computing all marginals"
     else:
-        dfs(int(root),-1,0)
+        rootedTree(int(root),-1,0)
 elif decMode == "C":
     msgPassVariant = lines.next()
     noIndepDec = int(lines.next())
     codeRate = float(lines.next())
     bitEnergy = float(lines.next())
     noise = float(lines.next())
-
+else:
+    print "Nothing here"
 '''
 for i in range(0,100):
     z = math.sqrt(noise/2.0)*genAWGN()
