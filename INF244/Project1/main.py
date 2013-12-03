@@ -47,6 +47,10 @@ def genAWGN():
     return z0
 
 def computeMarginal(neigh,node, res, nodeVals):
+
+    if len(res) == 1:
+        return [res[0][0]*nodeVals[0],res[0][1]*nodeVals[1]]
+    
     TT = genTT(len(neigh))
     ind = 0
     ones = zeroes =  0
@@ -79,7 +83,6 @@ def computeMarginal(neigh,node, res, nodeVals):
             zeroes += prod
         else:
             ones += prod
-    print "Marginal for " + str(node) + " is " + str([zeroes,ones])
     
     return [zeroes,ones]
 
@@ -120,13 +123,17 @@ def rootedTree(curr, prev, flag):
             res.append(rootedTree(i,curr, (flag + 1) % 2))
         else:
             print str(notFc) + "_" + str(i) + " already visited"
-
+    print "Computing marginal for " + str(fc) + "_" + str(curr)
+    marg = computeMarginal(neighs[0],curr,res,neighs[1])
+    print "Marginal for " + str(fc) + "_" + str(curr) + " is " + str(marg)
+    return marg
+'''
     if len(res) == len(neighs[0]):
         print "Computing marginal for " + str(fc) + "_" + str(curr)
         return computeMarginal(neighs[0], curr, res, neighs[1])
     else:
         return res
-
+'''
 ###################
 #####  MAIN  ######
 ###################
