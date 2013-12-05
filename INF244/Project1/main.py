@@ -47,14 +47,15 @@ def genAWGN():
     return z0
 
 def computeMarginal(neigh,node, res, nodeVals):
-
-    if len(res) == 1:
-        return [res[0][0]*nodeVals[0],res[0][1]*nodeVals[1]]
+    print "nodeVals " + str(nodeVals)
+    if nodeVals[0] == 1 and nodeVals[1] == 1:
+        return res
     
     TT = genTT(len(neigh))
     ind = 0
     ones = zeroes =  0
     indNode = neigh.index(node)
+    ret = []
     #cnt = 1
     #print "Indnode: " + str(indNode)
     #print len(neigh)
@@ -65,26 +66,27 @@ def computeMarginal(neigh,node, res, nodeVals):
         for j in flatten(res):
             print j
 
-            if cnt != 0:
+            #if cnt != 0:
                 #print "cnt is " + str(cnt)
-                print "i[cnt]: " + str(i[cnt])
-                prod *= j[0] if i[cnt] == 0 else j[1]
+            print "i[cnt]: " + str(i[cnt])
+            prod *= j[0] if i[cnt] == 0 else j[1]
 
             cnt = (cnt+1)%(len(neigh))
             
             #prod *= j[ind%len(j)]
         
         #print "nodeVals: " + str(nodeVals[ind])
-        prod *= nodeVals[ind]
+        #prod *= nodeVals[ind%len(nodeVals)]
         print "Prod " + str(prod)
         ind += 1
-            
+        ret.append(prod)
+        '''    
         if i[0] == 0:
             zeroes += prod
         else:
             ones += prod
-    
-    return [zeroes,ones]
+        '''
+    return ret
 
 #Flag tells whether we are in X or F list, X=0, F=1
 def rootedTree(curr, prev, flag):
@@ -123,17 +125,37 @@ def rootedTree(curr, prev, flag):
             res.append(rootedTree(i,curr, (flag + 1) % 2))
         else:
             print str(notFc) + "_" + str(i) + " already visited"
+
+    #if flag == 0 and 
     print "Computing marginal for " + str(fc) + "_" + str(curr)
+    result = []
+    if flag == 0:
+        ind = 0
+        prod = 1
+        resul = flatten(res)
+        for i in resul:
+            prod *= i[ind]
+        ind += 1
+        result.append(prod)
+        print "FC prod " + str(result)
+
+    
     marg = computeMarginal(neighs[0],curr,res,neighs[1])
-    print "Marginal for " + str(fc) + "_" + str(curr) + " is " + str(marg)
-    return marg
-'''
-    if len(res) == len(neighs[0]):
-        print "Computing marginal for " + str(fc) + "_" + str(curr)
-        return computeMarginal(neighs[0], curr, res, neighs[1])
-    else:
-        return res
-'''
+    print "marg " + str(marg)
+    if isinstance(marg[0],collections.Iterable):
+        marg = marg[0]
+    ret = [0,0]
+    for i in range(len(marg)):
+        prod = marg[i]*neighs[1][i]
+        print "Prod " + str(prod)
+        if i % 2 == 0:
+            ret[0] += prod
+        else:
+            ret[1] += prod
+    
+    print "Marginal for " + str(fc) + "_" + str(curr) + " is " + str(ret)
+    return ret
+
 ###################
 #####  MAIN  ######
 ###################
