@@ -47,8 +47,9 @@ def genAWGN():
     return z0
 
 def computeMarginal(neigh,node, res, nodeVals):
-    print "nodeVals " + str(nodeVals)
-    if nodeVals[0] == 1 and nodeVals[1] == 1:
+    #print "neighs " + str(neigh)
+    #print "nodeVals " + str(nodeVals)
+    if len(nodeVals) == 2 and nodeVals[0] == 1 and nodeVals[1] == 1:
         return res
     
     TT = genTT(len(neigh))
@@ -56,37 +57,44 @@ def computeMarginal(neigh,node, res, nodeVals):
     ones = zeroes =  0
     indNode = neigh.index(node)
     ret = []
+    marginals = [[] for _ in range(len(neigh)-1)]
     #cnt = 1
     #print "Indnode: " + str(indNode)
     #print len(neigh)
     for i in TT:
         prod = 1
-        print i
-        cnt = 0
+        #print i
+        cnt = (indNode+1)%len(neigh)
+        index = 0
         for j in flatten(res):
-            print j
+            #print j
 
-            #if cnt != 0:
-                #print "cnt is " + str(cnt)
-            print "i[cnt]: " + str(i[cnt])
-            prod *= j[0] if i[cnt] == 0 else j[1]
+            #print "cnt is " + str(cnt)
+            #print "i[cnt]: " + str(i[cnt])
+            tmp = j[0] if i[cnt] == 0 else j[1]
+            prod *= tmp
+            marginals[index].append( tmp )
 
-            cnt = (cnt+1)%(len(neigh))
+            cnt = (cnt+1)%len(neigh)
+            #if cnt == indNode:
+                #cnt = (cnt+1)%len(neigh)
+            index += 1
             
             #prod *= j[ind%len(j)]
         
         #print "nodeVals: " + str(nodeVals[ind])
-        #prod *= nodeVals[ind%len(nodeVals)]
-        print "Prod " + str(prod)
+        prod *= nodeVals[ind]
+        #print "Prod " + str(prod)
         ind += 1
         ret.append(prod)
-        '''    
-        if i[0] == 0:
+          
+        if i[indNode] == 0:
             zeroes += prod
         else:
             ones += prod
-        '''
-    return ret
+    #print "marginals " + str(marginals)
+    #print "Ret sumProduct " + str(ret)
+    return [zeroes,ones]
 
 #Flag tells whether we are in X or F list, X=0, F=1
 def rootedTree(curr, prev, flag):
@@ -108,38 +116,41 @@ def rootedTree(curr, prev, flag):
         neighs = f[curr]
         fc = 'F'
         notFc = 'X'
-    print "Curr: " + str(curr) + " Prev: " + str(prev) + " Flag: " + fc
+    #print "Curr: " + str(curr) + " Prev: " + str(prev) + " Flag: " + fc
     
     visited[curr] = 1
-    print neighs
-    #res.append(neighs[1])
+    #print neighs
     if len(neighs[0]) == 1 and neighs[0][0] == prev:
-        print str(fc) + "_" + str(curr) + " has Unit marginal " + str(neighs[1])
+        #print str(fc) + "_" + str(curr) + " has Unit marginal " + str(neighs[1])
         return neighs[1]
 
     for i in neighs[0]:
         #print i
         if otherVis[i] == -1:
-            print "Visiting: " + str(notFc) + "_" + str(i)
+            #print "Visiting: " + str(notFc) + "_" + str(i)
 #time.sleep(5)
             res.append(rootedTree(i,curr, (flag + 1) % 2))
         else:
-            print str(notFc) + "_" + str(i) + " already visited"
+            #print str(notFc) + "_" + str(i) + " already visited"
+            None
+            
+    #print "Computing message from " + str(fc) + "_" + str(curr) + " to " + str(notFc) + "_" + str(prev)
 
-    #if flag == 0 and 
-    print "Computing marginal for " + str(fc) + "_" + str(curr)
-    result = []
     if flag == 0:
-        ind = 0
-        prod = 1
-        resul = flatten(res)
-        for i in resul:
-            prod *= i[ind]
-        ind += 1
-        result.append(prod)
-        print "FC prod " + str(result)
+        rs = flatten(res)
+        ret = [1,1]
+        for i in rs:
+            #print "rs " + str(i)
+            ret[0] *= i[0]
+            ret[1] *= i[1]
+        #print "ret X " + str(ret)
+        return ret
+    else:
+        ret = computeMarginal(neighs[0],prev,res,neighs[1])
+        #print "ret F" + str(ret)
+        return ret
 
-    
+    '''        
     marg = computeMarginal(neighs[0],curr,res,neighs[1])
     print "marg " + str(marg)
     if isinstance(marg[0],collections.Iterable):
@@ -155,7 +166,7 @@ def rootedTree(curr, prev, flag):
     
     print "Marginal for " + str(fc) + "_" + str(curr) + " is " + str(ret)
     return ret
-
+    '''
 ###################
 #####  MAIN  ######
 ###################
@@ -237,9 +248,14 @@ if decMode == "A":
 elif decMode == "B":
     root = lines.next()
     if root == "a":
-        #for i in range(noVars):
-            #dfs(i,-1,0)
         print "Computing all marginals"
+        for i in range(noVars):
+            #print "Computing marginal for X_" + str(i)
+            marg = rootedTree(i,-1,0)
+            print "Marginal for X_" + str(i) + " is " + str(marg)
+            visitedF = list(itertools.repeat(-1, len(f)))
+            visitedX = list(itertools.repeat(-1, len(x)))
+        
     else:
         rootedTree(int(root),-1,0)
 elif decMode == "C":
