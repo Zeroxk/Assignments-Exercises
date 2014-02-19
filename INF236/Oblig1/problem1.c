@@ -22,11 +22,11 @@ int main(int argc, char* argv[]) {
     if(rank) {
         int i;
         for(i=1; i<np; i++){
-            MPI_Send(&val,np,MPI_INT,i,1,MPI_COMM_WORLD);
+            MPI_Send(&val,1,MPI_INT,i,1,MPI_COMM_WORLD);
         }
     }else {
         MPI Status status;
-        MPI_Recv(&val,np,MPI_INT,0,1,MPI_COMM_WORLD,&status);
+        MPI_Recv(&val,1,MPI_INT,0,1,MPI_COMM_WORLD,&status);
 
         int i;
         int a,b;
