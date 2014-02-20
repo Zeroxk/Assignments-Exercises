@@ -1,0 +1,39 @@
+\documentclass{article}
+
+\usepackage{parskip}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+
+\begin{document}
+
+\title{Numbert Theory exercises\\Chapter 1}
+\author{David Huynh}
+
+\maketitle
+
+Define $N: \mathbb{Z}[i] \Rightarrow \mathbb{Z}$ by $N(a+bi) = a^{2} + b^{2}$
+
+\section*{1}
+
+To verify that for all $\alpha,\beta \in \mathbb{Z}[i]$ $N(\alpha\beta) = N(\alpha)N(\beta)$ 
+
+\section*{2}
+
+If $\alpha$ is a unit then there is a $\beta \in \mathbb{Z}$ such that $\alpha\beta=1$. If we take the norms of this we get $N(\alpha)N(\beta) = N(1) = 1$\\
+The only integer solution to the equation $x^{2} + y^{2} = 1$ are $x,y = \pm 1$, thus the only units in $\mathbb{Z}[i]$ are $\pm 1$ and $\pm i$
+
+\section*{3}
+
+Suppose $N(\alpha) = p$ is a prime and $\alpha$ can be factorized into $\alpha = \beta \gamma$. If we take the norms we get $N(\alpha) = p = N(\beta)N(\gamma)$ and  which means $N(\beta)=1$ or $N(\gamma)=1$ aka a unit. Thus $\alpha$ is irreducible
+
+Suppose $N(\alpha) = p^{2}$ where $p$ is a prime in $\mathbb{Z}$ and $p \equiv 3 (mod4)$.\\
+Using same argument as in the first part $N(\alpha)=p^{2} = N(\beta)N(\gamma)$ which gives us 2 scenarios:
+\begin{enumerate}
+	\item $N(\beta) = N(\gamma) = p$
+	\item $N(\beta)$ or $N(\gamma)$ is a unit
+\end{enumerate}
+
+If 1) then $p$ can be expressed as the sum of two squares, this is not possible given $p \equiv 3(mod4)$ so we have scenario 2) and $\alpha$ is therefore irreducible
+
+
+\end{document}
