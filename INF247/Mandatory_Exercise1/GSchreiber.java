@@ -55,6 +55,7 @@ public class GSchreiber {
 		for (int i = 0; i < cipherText.length; i++) {
 			int c = cipherText[i];
 
+			int[] tmp = codeTable[cipherText[100]-1];
 			if(c == 29 || c == 32) {
 				int [] group = codeTable[i%26];
 				int [] group2 = codeTable[c-1];
@@ -300,6 +301,9 @@ public class GSchreiber {
 		for (int i = 0; i < coincidences.length; i ++) {
 			Integer[] bits = coincidences[i];
 			if(bits[0] == null) continue;
+			if(i%wheelSize == 0) {
+				System.out.println(i + " has remainder 0");
+			}
 			ArrayList<Integer []> arr = wheel.get(i%wheelSize);
 			arr.add(bits);
 
