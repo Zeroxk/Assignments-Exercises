@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage{parskip}
+\usepackage{mathtools}
+
+\begin{document}
+
+\title{INF247\\ Mandatory Exercise 1\\ G-Schreiber Cryptanalysis}
+\author{David Huynh\\ E-mail: dhu009@student.uib.no}
+\date{}
+
+\maketitle
+
+\section{Description, known data}
+
+We are given:
+\begin{itemize}
+	\item 1274 ciphertext chars
+	\item Ciphertext chars represented by their position in the CCITT2 code
+	\item 1300 plaintext chars
+	\item Plaintext consists of latin alphabet applied 50 times
+\end{itemize}
+
+Given these pieces of data, find:
+\begin{itemize}
+	\item All internal settings of the cipher
+	\item Initial state of the wheels
+	\item Cabling permutation
+	\item The remaining 26 ciphertext chars
+\end{itemize}
+
+\section{Solution}
+
+\subsection*{Cabling on first 5 plugs}
+
+First step is finding the cabling for the first 5 plugs, we do this by using observations on all 1 or all 0 ciphertext, the permutation step will not change the switch input so we can $\oplus$ ciphertext with plaintext to obtain the plug state.\\
+Next, on each wheel we do a bucketsort on the switch input where the wheelsize is the number of buckets to find the first 5 cablings. We notice that when the wheel has been clocked 1 period the bit must always be the same, so this means on each bucket we look at the columns of the entries. If there is a contradiction that two bits in the column are different, it means wheel $w$ can not be permuted to position $p$. Because the text is long enough we find the corresponding wheels and their positions for the first 5bits in the 10bit group.
+
+\subsection*{0-1 distribution on first 5 plugs}
+
+Now we need to find the 0-1 distribution on the 5 plugs. At first we can just populate the wheels with the bits we got from the plugstates and put the bits at the correct wheel now that we know the cabling, the plugstate is where we $\oplus$ plaintext with ciphertext when ciphertext was all 1 or all 0. Unfortunately this might not be enough, so we do something more.\\
+For the bits we did not manage to find we look at the 5bit-groups with only 1 missing bit. Check the corresponding ciphertext and compare the weights of the ciphertext and the 5bit-group, if it is the same we know the missing bit must be 0, else 1. With this corrected switch input we xor it with the plaintext and insert the correct values into the wheels.
+
+\subsection*{Cabling on last 5 wheels}
+
+To find the last 5 cablings we look at switch input/output of weight 1 or 4, we notice that each input/output implies a 5bit controlgroup with some structure, i.e $00001 \Rightarrow 00001$ means the controlgroup must start with 2 1s, $11???$.\\
+We use this observation to do another bucketsort, wheelsize is number of buckets and we put in the corresponding partial controlgroups. Next we do the same as for the first 5 cablings, check for contradictions in the columns, but this time ignore entries with "?" (represented as "2" in the program).
+
+\subsection*{0-1 distribution on last 5 plugs}
+
+Similar to 0-1 distribution on the first 5 plugs we look at our already discovered partial plugstate. Look at the bucketsorted wheels and keeping in mind where each wheel is cabled to we take the value in the column, ignoring "2"s. If for example we have this bucket for wheel 69 at position 61:
+\begin{verbatim}
+Position 61	
+[2, 0, 2, 2, 2]
+[2, 2, 0, 2, 2]
+[2, 2, 2, 1, 1]
+[2, 2, 1, 1, 2]
+[1, 0, 1, 2, 2]
+[2, 0, 2, 2, 2]
+[2, 2, 1, 0, 0]
+\end{verbatim}
+Since 69 is in the first positon of the last 5 plugs the bit would be 1.
+
+\section*{Program output}
+
+"Cabling" denotes which position the wheel is cabled to, starting at index 1. a "2" in the 0-1 distribution denotes a missing/unknown bit
+
+\begin{verbatim}
+Finding first 5 cablings
+Wheel	Cabling
+47:	1
+61:	2
+73:	3
+71:	4
+65:	5
+
+Finding 0-1 distribution on first 5 cablings
+
+Wheel	 0-1 distribution First pass
+47:	[1, 2, 1, 0, 2, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 2, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 2, 1, 0, 1, 1]
+61:	[0, 1, 0, 2, 2, 0, 1, 1, 0, 1, 2, 0, 2, 0, 1, 1, 2, 2, 0, 0, 0, 2, 1, 0, 1, 2, 1, 2, 1, 2, 0, 0, 1, 0, 0, 2, 1, 0, 1, 2, 0, 0, 2, 1, 1, 1, 2, 1, 2, 2, 0, 0, 1, 0, 1, 2, 2, 0, 0, 2, 2]
+73:	[0, 2, 2, 2, 0, 1, 0, 0, 2, 2, 1, 0, 2, 0, 1, 0, 0, 2, 2, 2, 1, 1, 1, 1, 2, 1, 2, 0, 0, 1, 2, 0, 1, 1, 0, 2, 1, 0, 1, 1, 1, 2, 0, 2, 0, 1, 0, 2, 1, 1, 1, 1, 2, 0, 0, 2, 2, 2, 0, 1, 2, 0, 0, 1, 0, 2, 2, 1, 2, 1, 2, 0, 0]
+71:	[0, 2, 2, 1, 1, 1, 1, 0, 0, 1, 2, 2, 0, 2, 0, 0, 2, 2, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 0, 2, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 2, 1, 1, 1, 0, 1, 2, 2, 2, 0, 1, 1, 0, 1, 2, 0, 0, 0]
+65:	[2, 2, 2, 0, 1, 0, 1, 0, 2, 1, 2, 2, 0, 1, 0, 0, 1, 2, 0, 0, 0, 0, 2, 1, 2, 1, 0, 2, 1, 0, 1, 1, 1, 0, 1, 2, 0, 2, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 2, 1, 2, 1, 1, 2, 0, 0, 1, 1, 0, 0, 2, 0, 2, 0, 1]
+
+Wheel	 0-1 distribution Second pass
+47:	[1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1]
+61:	[0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1]
+73:	[0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0]
+71:	[0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0]
+65:	[0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1]
+
+Finding last 5 cablings
+Wheels	Cabling
+69:	6
+59:	7
+64:	8
+53:	9
+67:	10
+\end{verbatim}
+
+\end{document}
