@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage{parskip}
+\usepackage{mathtools}
+
+\begin{document}
+
+\title{INF236\\ Compulsary Assignment 1}
+\author{David Huynh\\ E-mail: dhu009@student.uib.no}
+\date{}
+
+\maketitle
+
+\section*{Problem 1}
+
+\subsection*{Solution}
+
+I divide the workload by splitting n into $n/np$ intervals and each process finds the consecutive odd primes for its interval. At the end I use \verb|MPI_Reduce| to compute the total number of pairs.
+
+\subsection*{Benchmarks}
+
+\begin{table}[h]
+\begin{tabular}{llll}
+$np/n$ & $10^{6}$ & $10^{7}$ & $10^{8}$\\
+5 & 0.2880 & 7.1110 & 175.92\\
+10 & 0.1274 & 1.918 & 41.01\\
+20 & 0.0617 & 1.017 & 20.8112\\
+40 & 0.05297 & 0.7910 & 10.858
+\end{tabular}
+\end{table}
+
+\section*{Problem 2}
+
+\subsection*{Solution}
+
+I use row granularity for the dynamic task assignment, to each idle slave I send a row index $i$ and keep track of which row process $p$ is working on. When $p$ is finished I insert the results directly into the 2D results table and give it a new job if there are any availble.
+
+\subsection*{Benchmarks}
+
+\begin{table}[h]
+\begin{tabular}{llll}
+ & Static & & \\
+$np/nxm$ & 200x$10^{6}$ & 300x$10^{6}$ &\\
+1 & 47.395 & 107.734 &\\
+10 & 17.323 & 39.826 &\\
+20 & 12.834 & 33.952 &
+\end{tabular}
+\end{table}
+
+Dynamic was faster than static.
+
+\end{document}
