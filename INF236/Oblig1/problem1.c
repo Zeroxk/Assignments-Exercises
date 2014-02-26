@@ -16,7 +16,14 @@ int isPrime(unsigned int n) {
 
 int main(int argc, char* argv[]) {
     int rank,np,res;
-    unsigned int n = 20; 
+    if(argc < 2) {
+        if(rank == 0) printf("Too few arguments\n");
+        MPI_Finalize();
+        return 0;
+    }
+
+    unsigned int n;
+    scanf("%d",&n);
     res = 0; 
     unsigned int val= 0;
     int totalPairs = 0;;
