@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &np);
 
+    double startTime = MPI_Wtime();
     if(rank == 0) {
          int i;
          for(i=1; i<np; i++) {
@@ -64,9 +65,13 @@ int main(int argc, char* argv[]) {
 
     MPI_Reduce(&res,&totalPairs,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
 
+    double finishTime = MPI_Wtime();
+    double elapsed = finishTime-startTime;
+    
     if(rank == 0) {
         int i;
         printf("Total consecutive prime pairs between %d and %d is %d\n",1,n,totalPairs);
+        printf("This job took %.9f seconds\n",elapsed);
     }
 
     MPI_Finalize();
