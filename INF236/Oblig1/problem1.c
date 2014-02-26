@@ -7,7 +7,7 @@
 int isPrime(unsigned int n) {
     if(n == 1) return 0;
     int i;
-    for(i=2; i<=(int)sqrt((double)n); i++){
+    for(i=2; i*i<=n; i++){
         if(n%i == 0) return 0;
     }
 
@@ -16,6 +16,9 @@ int isPrime(unsigned int n) {
 
 int main(int argc, char* argv[]) {
     int rank,np,res;
+    MPI_Init(&argc,&argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &np);
     if(argc < 2) {
         if(rank == 0) printf("Too few arguments\n");
         MPI_Finalize();
@@ -23,13 +26,10 @@ int main(int argc, char* argv[]) {
     }
 
     unsigned int n;
-    scanf("%d",&n);
+    n = atoi(argv[1]);
     res = 0; 
     unsigned int val= 0;
     int totalPairs = 0;;
-    MPI_Init(&argc,&argv);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &np);
 
     double startTime = MPI_Wtime();
     if(rank == 0) {
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
          for(i=1; i<np; i++) {
              //val += n/np + (i < (n%np));
              val = (n/(np-1))*i; 
-             printf("Sending value %d to process %d\n",val,i);
+             //printf("Sending value %d to process %d\n",val,i);
              MPI_Send(&val,1,MPI_INT,i,1,MPI_COMM_WORLD);
          }
          
@@ -50,17 +50,17 @@ int main(int argc, char* argv[]) {
         int i;
         int start,end;
         start = 0+((n/(np-1))*(rank-1));
-        printf("Start is %d\n",start);
+        //printf("Start is %d\n",start);
         //if(val == n) start = (n/(np-1))*rank;
         for(i=start; i<val; i++) {
             //printf("i:%d\n",i);
             if(i%2 == 0) continue;
             if((i+2)<n && isPrime(i) && isPrime(i+2)) {
-               printf("(%d,%d)\n",i,i+2);
+               //printf("(%d,%d)\n",i,i+2);
                res++;
             }
         }
-        printf("%d consecutive prime pairs from process %d\n",res,rank);
+        //printf("%d consecutive prime pairs from process %d\n",res,rank);
     }
 
     MPI_Reduce(&res,&totalPairs,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
