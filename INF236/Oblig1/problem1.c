@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h
+#include <stdlib.h>
 #include <time.h>
 #include <mpi.h>
 #include <math.h>
 
-int isPrime(int n) {
+int isPrime(unsigned int n) {
     if(n == 1) return 0;
     int i;
     for(i=2; i<=(int)sqrt((double)n); i++){
@@ -15,8 +15,11 @@ int isPrime(int n) {
 }
 
 int main(int argc, char* argv[]) {
-    int rank,np,n,val,res,total;
-    n = 20; res,total,val= 0;
+    int rank,np,res;
+    unsigned int n = 20; 
+    res = 0; 
+    unsigned int val= 0;
+    int totalPairs = 0;;
     MPI_Init(&argc,&argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &np);
@@ -24,33 +27,42 @@ int main(int argc, char* argv[]) {
     if(rank == 0) {
          int i;
          for(i=1; i<np; i++) {
-             val += (n/(np-1));
+             //val += n/np + (i < (n%np));
+             val = (n/(np-1))*i; 
              printf("Sending value %d to process %d\n",val,i);
              MPI_Send(&val,1,MPI_INT,i,1,MPI_COMM_WORLD);
          }
+         
 
     }else {
         MPI_Status status;
         MPI_Recv(&val,1,MPI_INT,0,1,MPI_COMM_WORLD,&status);
-        printf("Process %d received value %d\n",rank,val);
+        //printf("Process %d received value %d\n",rank,val);
 
         int i;
-        int a,b;
-        for(i=(val-(n/(np-1))); i<val; i++) {
+        int start,end;
+        start = 0+((n/(np-1))*(rank-1));
+        printf("Start is %d\n",start);
+        //if(val == n) start = (n/(np-1))*rank;
+        for(i=start; i<val; i++) {
             //printf("i:%d\n",i);
             if(i%2 == 0) continue;
-            if(isPrime(i) && isPrime(i+2)) {
+            if((i+2)<n && isPrime(i) && isPrime(i+2)) {
                printf("(%d,%d)\n",i,i+2);
                res++;
             }
         }
         printf("%d consecutive prime pairs from process %d\n",res,rank);
-
     }
 
-    printf("\nTotal number of consecutive prime pairs is %d\n",res);
+    MPI_Reduce(&res,&totalPairs,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
 
-     MPI_Finalize();
+    if(rank == 0) {
+        int i;
+        printf("Total consecutive prime pairs between %d and %d is %d\n",1,n,totalPairs);
+    }
 
-      return 0;
+    MPI_Finalize();
+
+    return 0;
 }
