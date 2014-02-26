@@ -52,6 +52,11 @@ int main(int argc,char** argv) {
         }
     }
 
+    double xstep = 4.0/dim, ystep = 4.0/dim;
+    double xmin = -2.0;
+    double ymax = 2.0-row1[rank]*ystep;
+    double a,b;
+
     free(rows);
     free(row1);
     free(count);
