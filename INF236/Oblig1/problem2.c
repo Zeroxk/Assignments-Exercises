@@ -40,6 +40,29 @@ int main(int argc,char** argv) {
     row1[0] = 0;
     pos[0] = 0;
 
+    int** pict;
+    int* ptr;
+    int** result;
+    int* resptr;
+    if(rank == 0) {
+        result = (int**)malloc(sizeof(int*)*dim);
+        resptr = (int*)malloc(sizeof(int)*dim*dim);
+        for(i=0; i<dim; i++) {
+            result[i] = resptr + i*dim;
+        }
+    }
+
+    free(rows);
+    free(row1);
+    free(count);
+    free(pos);
+    free(pict);
+    free(ptr);
+    if(rank == 0) {
+        free(result);
+        free(respt)r;
+    }
+
     MPI_Finalize;
     return 0;
 }
