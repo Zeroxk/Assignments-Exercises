@@ -24,7 +24,9 @@ $np/n$ & $10^{6}$ & $10^{7}$ & $10^{8}$\\
 5 & 0.2880 & 7.1110 & 175.92\\
 10 & 0.1274 & 1.918 & 41.01\\
 20 & 0.0617 & 1.017 & 20.8112\\
-40 & 0.05297 & 0.7910 & 10.858
+40 & 0.05297 & 0.7910 & 10.858\\
+60 & 0.0392 & 0.7827 & 10.0781\\
+80 & 0.0344  & 0.6715 & 9.4526
 \end{tabular}
 \end{table}
 
@@ -36,13 +38,31 @@ I use row granularity for the dynamic task assignment, to each idle slave I send
 
 \subsection*{Benchmarks}
 
+For static benchmarking I just used the supplied "mandel.c" shown in lecture.
+
 \begin{table}[h]
-\begin{tabular}{llll}
- & Static & & \\
-$np/nxm$ & 200x$10^{6}$ & 300x$10^{6}$ &\\
-1 & 47.395 & 107.734 &\\
-10 & 17.323 & 39.826 &\\
-20 & 12.834 & 33.952 &
+\begin{tabular}{lllll}
+Static task assignment & & & & \\
+$np/mxn$ & 200x$10^{6}$ & 300x$10^{6}$ & 200x$10^{7}$ & 300x$10^{7}$\\
+2 & 22.2150 & 49.8010 & 216.6573 & 501.7430\\
+5 & 30.8100 & 69.1648 & 306.4707 & 687.4342\\
+10 & 15.5455 & 34.9789 & 153.3336  & 344.4189\\
+20 & 9.2147 & 20.4410 & 88.1760 & 200.3842\\
+40 & 5.2880 & 12.6460 & 29.2556  & 79.8056\\
+80 & 3.2068 & 6.6983 & 28.8200 & 63.4330
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{lllll}
+Dynamic task assignment & & & &\\
+$np/mxn$ & 200x$10^{6}$ & 300x$10^{6}$ & 200x$10^{7}$ & 300x$10^{7}$\\
+2 & 42.8625 & 96.4700 & & \\
+5 & 
+10 &  &  &\\
+20 &  &  &
+40
+80
 \end{tabular}
 \end{table}
 
