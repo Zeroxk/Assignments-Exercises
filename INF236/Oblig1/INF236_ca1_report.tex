@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{parskip}
+\usepackage{mathtools}
+
+\begin{document}
+
+\title{INF236\\ Compulsary Assignment 1}
+\author{David Huynh\\ E-mail: dhu009@student.uib.no}
+\date{}
+
+\maketitle
+
+\section*{Problem 1: Consecutive prime pairs}
+
+\subsection*{Solution}
+
+I divide the workload by splitting n into $n/np$ intervals and each process finds the consecutive odd primes for its interval. At the end I use \verb|MPI_Reduce| to compute the total number of pairs.
+
+\subsection*{Benchmarks}
+
+All times in seconds
+\begin{table}[h]
+\begin{tabular}{llll}
+$np/n$ & $1\cdotp10^{6}$ & $1\cdotp10^{7}$ & $1\cdotp10^{8}$\\
+5 & 0.2880 & 7.1110 & 175.92\\
+10 & 0.1274 & 1.918 & 41.01\\
+20 & 0.0617 & 1.017 & 20.8112\\
+40 & 0.05297 & 0.7910 & 10.858\\
+60 & 0.0392 & 0.7827 & 10.0781\\
+80 & 0.0344  & 0.6715 & 9.4526
+\end{tabular}
+\end{table}
+
+\section*{Problem 2: Static vs dynamic task assignment of finding the Mandelbrot set}
+
+\subsection*{Solution}
+
+I use row granularity for the dynamic task assignment, to each idle slave I send a row index $i$ and keep track of which row process $p$ is working on. When $p$ is finished I insert the results directly into the 2D results table and give it a new row index to work on and update which row $p$ is working on. The slaves terminate when there are no more row indices to work on, which means we have completed the Mandelbrot set.
+
+\subsection*{Benchmarks}
+
+For static benchmarking I just used the supplied "mandel.c" shown in lecture.
+
+All times in seconds
+\begin{table}[h]
+\begin{tabular}{lllll}
+Static task assignment: & & & & \\
+$np/mxn$ & 200x$10^{6}$ & 300x$10^{6}$ & 200x$10^{7}$ & 300x$10^{7}$\\
+2 & 22.2150 & 49.8010 & 216.6573 & 501.7430\\
+5 & 30.8100 & 69.1648 & 306.4707 & 687.4342\\
+10 & 15.5455 & 34.9789 & 153.3336  & 344.4189\\
+20 & 9.2147 & 20.4410 & 88.1760 & 200.3842\\
+40 & 5.2880 & 12.6460 & 29.2556  & 79.8056\\
+80 & 3.2068 & 6.6983 & 28.8200 & 63.4330
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{lllll}
+Dynamic task assignment: & & & &\\
+$np/mxn$ & 200x$10^{6}$ & 300x$10^{6}$ & 200x$10^{7}$ & 300x$10^{7}$\\
+2 & 42.8625 & 96.4700 & 425.9642& 962.7363\\
+5 & 11.0000 & 24.5547 & 107.2900 & 242.3183\\
+10 & 5.1150 & 11.0881 & 47.5978 & 107.2945\\
+20 & 2.5944 & 5.6562 & 23.4203 & 53.6336\\
+40 & 1.6073 & 3.0783 & 11.9102 & 26.3538\\
+80 & 0.3128 & 2.2228 & 1.8048 & 16.8360
+\end{tabular}
+\end{table}
+
+Dynamic being slower than static when $np=2$ is probably because there will only be 1 slave in my program at that time so would be the same as $np=1$ but with communication overhead. In all other cases dynamic task assignment wins by atleast a factor of 2.
+
+\end{document}
