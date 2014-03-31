@@ -1,4 +1,4 @@
-#include <stdio.h>
+x#include <stdio.h>
 #include <math.h>
 #include <mpi.h>
 
