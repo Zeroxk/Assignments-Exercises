@@ -27,14 +27,16 @@ pair<LL,LL> eea(LL a, LL b) {
 
 int main(void) {
    LL a,b;
-   
+   printf("e phi(n)\n");
    //a is public exponent e, b is phi(n)
    while(scanf("%lld %lld", &a, &b) == 2) {
+        printf("e phi(n)\n");
         pair<LL,LL> XY = eea(a,b);
         LL gcd = (a*XY.first)+(b*XY.second);
 
         printf("x: %lld y: %lld gcd(a,b): %lld\n", XY.first, XY.second, gcd); 
-        printf("Private exponent d is: %lld\n", b + XY.first);
+        LL d = XY.first < 0 ? b + XY.first : XY.first;
+        printf("Private exponent d is: %lld\n", d);
 
    }
 
