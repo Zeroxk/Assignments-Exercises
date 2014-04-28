@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void radixSort(int *a, int n, int b) {
     int noBuckets = 1 << b;
@@ -17,6 +18,8 @@ void radixSort(int *a, int n, int b) {
     int tmp[n];
 
     int cntr = 0;
+    time_t start,end;
+    start = clock();
     while( (max >> (cntr * b)) > 0) {
 
         memset(buckets, 0, sizeof(buckets));
@@ -45,6 +48,8 @@ void radixSort(int *a, int n, int b) {
         cntr++;
 
     }
+    end = clock();
+    printf("Radix sort spent %f seconds\n", (end-start)/CLOCKS_PER_SEC);
 }
 
 int main(int argc, char** argv) {
