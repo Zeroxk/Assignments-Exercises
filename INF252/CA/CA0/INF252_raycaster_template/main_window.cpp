@@ -54,7 +54,7 @@ void MainWindow::init() {
     m_glSlicerWidget->setAxis(0);
     // TODO (CA1): set current and max values on m_slider_slice
     m_slider_slice->setMinimum(0);
-    m_slider_slice->setMaximum(m_volume.getHeight()*m_volume.getWidth());
+    m_slider_slice->setMaximum(m_volume.getDepth()-1);
 
     this->resetDvrTab();
     m_glDvrWidget->setVolume(&m_volume);
@@ -99,15 +99,16 @@ void MainWindow::changeSlicerAxis(int axis) {
     // TODO (CA1): set the new axis on the slicer widget
     m_glSlicerWidget->setAxis(axis);
     // TODO (CA1): reset m_slider_slice
+    m_glSlicerWidget->setSlice(0);
     m_slider_slice->setValue(0);
     // TODO (CA1): set the maximum value for m_slider_slice
     int max = 0;
     switch(axis) {
     case 0: max = m_volume.getDepth(); break;
-    case 1: max = m_volume.getHeight(); break;
-    case 2: max = m_volume.getWidth(); break;
+    case 1: max = m_volume.getWidth(); break;
+    case 2: max = m_volume.getHeight(); break;
     }
-    m_slider_slice->setMaximum(max);
+    m_slider_slice->setMaximum(max-1);
 
 
     m_glSlicerWidget->updateContent();

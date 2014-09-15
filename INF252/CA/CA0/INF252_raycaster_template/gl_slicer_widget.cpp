@@ -180,9 +180,21 @@ void GLSlicerWidget::updateTexture() {
 
     // TODO (CA1): compute slice rendering here
 
-    int W = mp_volume->getWidth();
-    int H = mp_volume->getHeight();
-    //if(m_texBuf) delete [] m_texBuf;
+    if(m_axis == 0) { //xy slice
+        fillTexBuf(mp_volume->getWidth(), mp_volume->getHeight());
+    }else if(m_axis == 1) { //yz slice
+        fillTexBuf(mp_volume->getHeight(), mp_volume->getDepth());
+    }else if(m_axis == 2) { //xz slice
+        fillTexBuf(mp_volume->getWidth(), mp_volume->getDepth());
+    }
+
+} /* updateTexture() */
+
+void GLSlicerWidget::fillTexBuf(int W, int H) {
+
+    if(m_texBuf) delete [] m_texBuf;
+    m_texHeight = H;
+    m_texWidth = W;
     m_texBuf = new float[W*H];
 
     //std::cout << "W " << W << "\tH " << H << "\tD " << D << std::endl;
@@ -190,13 +202,15 @@ void GLSlicerWidget::updateTexture() {
     for (int i = 0; i < W; i++) {
         for (int j = 0; j < H; j++) {
             //std::cout << "i " << i << "\t j " << j << std::endl;
-            m_texBuf[(j*W)+i] = mp_volume->getVoxel(i,j,m_currSlice);
+            if(m_axis == 0) {
+                m_texBuf[(j*W)+i] = mp_volume->getVoxel(i,j,m_currSlice);
+            }else if(m_axis == 1) {
+                m_texBuf[(j*W)+i] = mp_volume->getVoxel(m_currSlice,i,j);
+            }else {
+                m_texBuf[(j*W)+i] = mp_volume->getVoxel(i,m_currSlice,j);
+            }
+
             //m_texBuf[j*W+i] = mp_volume->getData()[m_currSlice*H*W+j*W+i];
         }
     }
-
-    /*glEnable(GL_TEXTURE_2D);
-    glGenTextures(1,&m_textureId);
-    glBindTexture(GL_TEXTURE_2D, m_textureId);*/
-
-} /* updateTexture() */
+}

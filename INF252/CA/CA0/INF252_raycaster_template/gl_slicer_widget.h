@@ -72,6 +72,8 @@ private:
      *  texture buffer. */
     void updateTexture();
 
+    void fillTexBuf(int W, int H);
+
 
     // ************************************************************************
     // *** Class members ******************************************************
