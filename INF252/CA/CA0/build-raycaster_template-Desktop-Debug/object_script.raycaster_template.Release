@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\Volume.o
+./release\main_window.o
+./release\gl_cube_widget.o
+./release\gl_dvr_widget.o
+./release\gl_slicer_widget.o
+./release\gl_tf_widget.o
+./release\TransferFunction.o
+./release\moc_gl_cube_widget.o
+./release\moc_gl_dvr_widget.o
+./release\moc_gl_slicer_widget.o
+./release\moc_gl_tf_widget.o
+./release\moc_main_window.o
+./release\moc_TransferFunction.o
+);

@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\Volume.o
+./debug\main_window.o
+./debug\gl_cube_widget.o
+./debug\gl_dvr_widget.o
+./debug\gl_slicer_widget.o
+./debug\gl_tf_widget.o
+./debug\TransferFunction.o
+./debug\moc_gl_cube_widget.o
+./debug\moc_gl_dvr_widget.o
+./debug\moc_gl_slicer_widget.o
+./debug\moc_gl_tf_widget.o
+./debug\moc_main_window.o
+./debug\moc_TransferFunction.o
+);
