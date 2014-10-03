@@ -47,6 +47,10 @@ public:
     /// Return the total number of voxels.
     inline int getVoxelNum() const { return m_voxelNum; }
 
+    inline float getMean() const { return m_mean; }
+
+    void setMean(float mean);
+
     /** Return a pointer to the voxel values
      *  NOTE: you are not supposed to modify the original data! */
     inline float *getData() { return m_voxelData; }
@@ -77,6 +81,7 @@ private:
     int m_voxelNum;    ///< number of voxels in the volume
 
     float *m_voxelData;  ///< linear array with the volume's intensity values
+    float m_mean; ///Mean of the volume
 }; /* Volume */
 
 #endif /* VOLUME_H */

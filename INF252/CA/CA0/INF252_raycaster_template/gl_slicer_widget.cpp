@@ -68,6 +68,11 @@ void GLSlicerWidget::setAxis(int axis) {
 
 }
 
+void GLSlicerWidget::setContrast(int exp) {
+    m_contrast = exp;
+    changeContrast(exp);
+}
+
 // ************************************************************************
 // *** OpenGL handlers ****************************************************
 /// Initialize the OpenGL context
@@ -196,21 +201,40 @@ void GLSlicerWidget::fillTexBuf(int W, int H) {
     m_texHeight = H;
     m_texWidth = W;
     m_texBuf = new float[W*H];
+    m_image = 0.0; m_mean = 0.0;
 
     //std::cout << "W " << W << "\tH " << H << "\tD " << D << std::endl;
 
+    float tmp = 0.0;
     for (int i = 0; i < W; i++) {
         for (int j = 0; j < H; j++) {
             //std::cout << "i " << i << "\t j " << j << std::endl;
             if(m_axis == 0) {
-                m_texBuf[(j*W)+i] = mp_volume->getVoxel(i,j,m_currSlice);
+                tmp = mp_volume->getVoxel(i,j,m_currSlice);
+                m_texBuf[(j*W)+i] = tmp;
             }else if(m_axis == 1) {
-                m_texBuf[(j*W)+i] = mp_volume->getVoxel(m_currSlice,i,j);
+                tmp = mp_volume->getVoxel(m_currSlice,i,j);
+                m_texBuf[(j*W)+i] = tmp;
             }else {
-                m_texBuf[(j*W)+i] = mp_volume->getVoxel(i,m_currSlice,j);
+                tmp = mp_volume->getVoxel(i,m_currSlice,j);
+                m_texBuf[(j*W)+i] = tmp;
             }
 
             //m_texBuf[j*W+i] = mp_volume->getData()[m_currSlice*H*W+j*W+i];
         }
     }
+
+}
+
+void GLSlicerWidget::changeContrast(int exp) {
+
+    //Changing contrast of the slice by applying the formula 1/(1+(mean/voxel)^exp) on all voxels in the slice, exp is value from 0 to 25.
+
+    /*for (int i = 0; i < m_texWidth; ++i) {
+        for (int j = 0; j < m_texHeight; ++j) {
+            float tmp = m_texBuf[(j*m_texWidth)+i];
+            m_texBuf[(j*m_texWidth)+i] = 1 / (1 + std::pow( (m_mean/tmp),exp) );
+        }
+    }*/
+
 }

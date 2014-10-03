@@ -136,6 +136,9 @@ void GLDvrWidget::resizeGL(int width, int height) {
 void GLDvrWidget::mousePressEvent(QMouseEvent *event) {
     std::cout << "GLDvrWidget::mousePressEvent()" << std::endl;
     // TODO (CA2)
+    int y = event->y();
+    m_prevMouseY = y;
+
     this->updateContent();
 }
 
@@ -169,5 +172,7 @@ void GLDvrWidget::updateTexture() {
     assert(mp_transferFunction);
 
     // TODO (CA2): perform Direct Volume Rendering here
+
+
 
 } /* updateTexture() */

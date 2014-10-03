@@ -86,7 +86,8 @@ private:
 
     // TODO (CA2&3): add anything else you need here
 
-
+    int m_prevMouseY;
+    int m_prevMouseX;
 
 
     // ************************************************************************

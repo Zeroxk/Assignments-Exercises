@@ -13,9 +13,11 @@
 // Default constructor.
 Volume::Volume() :
     m_width(0), m_height(0), m_depth(0), m_sliceSize(0), m_voxelNum(0),
-    m_voxelData(NULL)
+    m_voxelData(NULL),m_mean(0.0)
 {
 }
+
+
 
 /// Create a Volume loading data from the specified file
 Volume::Volume(const std::string &strFilename) :
@@ -73,6 +75,10 @@ float& Volume::getVoxel(int x, int y, int z) {
 // Return the value of the voxel at the specified position (const)
 const float& Volume::getVoxel(int x, int y, int z) const {
     return m_voxelData[m_sliceSize * z + m_width * y + x];
+}
+
+void Volume::setMean(float mean) {
+    m_mean = mean;
 }
 
 

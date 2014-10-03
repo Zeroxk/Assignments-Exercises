@@ -54,6 +54,8 @@ public slots:
     /// Change the currently displayed slice
     void changeSlicerSlice(int slice);
 
+    void changeContrast(int exp);
+
 
     // --- DVR Tab ------------------------------
     /// Called when the dynamic resolution dropdown menu changes
@@ -120,6 +122,7 @@ private:
 
     // Slicer GUI elements
     QSlider *m_slider_slice;
+    QSlider *m_slider_contrast;
     QComboBox *m_combo_sliceAxis;
 
     // DVR GUI elements

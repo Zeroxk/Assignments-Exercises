@@ -50,11 +50,27 @@ MainWindow::~MainWindow() {
 void MainWindow::init() {
 
     m_glSlicerWidget->setVolume(&m_volume);
+
+    float val = 0.0;
+    for (int i = 0; i < m_volume.getWidth(); ++i) {
+        for (int j = 0; j < m_volume.getHeight(); ++j) {
+            for (int k = 0; k < m_volume.getDepth(); ++k) {
+                val += m_volume.getVoxel(i,j,k);
+            }
+        }
+    }
+    m_volume.setMean( val/m_volume.getVoxelNum() );
+    std::cout << "Mean is " << m_volume.getMean() << std::endl;
+
     // TODO (CA1): initialize any other parameter for the Slicer
+    m_combo_sliceAxis->setCurrentIndex(0);
     m_glSlicerWidget->setAxis(0);
     // TODO (CA1): set current and max values on m_slider_slice
     m_slider_slice->setMinimum(0);
     m_slider_slice->setMaximum(m_volume.getDepth()-1);
+
+    m_slider_contrast->setMinimum(0);
+    m_slider_contrast->setMaximum(25);
 
     this->resetDvrTab();
     m_glDvrWidget->setVolume(&m_volume);
@@ -101,6 +117,11 @@ void MainWindow::changeSlicerAxis(int axis) {
     // TODO (CA1): reset m_slider_slice
     m_glSlicerWidget->setSlice(0);
     m_slider_slice->setValue(0);
+
+    //Reset contrast slider
+    m_glSlicerWidget->setContrast(0);
+    m_slider_contrast->setValue(0);
+
     // TODO (CA1): set the maximum value for m_slider_slice
     int max = 0;
     switch(axis) {
@@ -121,6 +142,12 @@ void MainWindow::changeSlicerSlice(int slice) {
     m_glSlicerWidget->setSlice(slice);
 
     m_glSlicerWidget->updateContent();
+}
+
+void MainWindow::changeContrast(int exp) {
+    std::cout << "changeContrast(" << exp << ")" << std::endl;
+    m_glSlicerWidget->setContrast(exp);
+    m_glSlicerWidget->updateGL();
 }
 
 // --- DVR Tab ------------------------------
@@ -327,12 +354,29 @@ QWidget* MainWindow::createSlicerTab(QWidget *parent) {
     QSpacerItem* spacer1_Slicer = new QSpacerItem(20, 480, QSizePolicy::Minimum, QSizePolicy::Expanding);
     layoutSlicerControl->addItem(spacer1_Slicer);
 
+    //Slider slice label
+    QLabel* label2_Slicer = new QLabel(widgetSlicerControl);
+    label2_Slicer->setText(QApplication::translate("MainWindowClass", "Slice slider", 0, QApplication::UnicodeUTF8));
+    layoutSlicerControl->addWidget(label2_Slicer);
+
     // the slider
     m_slider_slice = new QSlider(widgetSlicerControl);
     m_slider_slice->setObjectName(QString::fromUtf8("hSlider_Slicer"));
     m_slider_slice->setOrientation(Qt::Horizontal);
     m_slider_slice->setRange(0,0);
     layoutSlicerControl->addWidget(m_slider_slice);
+
+    //Slider contrast label
+    QLabel* label3_Contrast = new QLabel(widgetSlicerControl);
+    label3_Contrast->setText(QApplication::translate("MainWindowClass", "Contrast slider", 0, QApplication::UnicodeUTF8));
+    layoutSlicerControl->addWidget(label3_Contrast);
+
+    // the contrast slider
+    m_slider_contrast = new QSlider(widgetSlicerControl);
+    m_slider_contrast->setObjectName(QString::fromUtf8("hSlider_Contrast"));
+    m_slider_contrast->setOrientation(Qt::Horizontal);
+    m_slider_contrast->setRange(0,0);
+    layoutSlicerControl->addWidget(m_slider_contrast);
 
     // the pushbutton
     QPushButton *push_slicerTf = new QPushButton(widgetSlicerControl);
@@ -347,6 +391,7 @@ QWidget* MainWindow::createSlicerTab(QWidget *parent) {
     // --- Establish all the connections from this tab ---
     connect(push_slicerTf, SIGNAL(clicked()),this, SLOT(openTFEditor()));
     connect(m_slider_slice, SIGNAL(valueChanged(int)), this, SLOT(changeSlicerSlice(int)));
+    connect(m_slider_contrast, SIGNAL(valueChanged(int)), this, SLOT(changeContrast(int)));
     connect(m_combo_sliceAxis, SIGNAL(activated(int)), this, SLOT(changeSlicerAxis(int)));
 
     return tabSlicer;

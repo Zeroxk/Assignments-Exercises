@@ -40,6 +40,8 @@ public:
     // TODO (CA1): add a method to change the selected axis
     void setAxis(int axis);
 
+    void setContrast(int exp);
+
     // ************************************************************************
     // *** OpenGL handlers ****************************************************
 protected:
@@ -74,6 +76,8 @@ private:
 
     void fillTexBuf(int W, int H);
 
+    void changeContrast(int exp);
+
 
     // ************************************************************************
     // *** Class members ******************************************************
@@ -93,6 +97,11 @@ private:
     int m_axis; ///0,1,2 is x,y,z
     // TODO (CA1): add anything else you need here
     int m_currSlice;
+
+    int m_contrast; //exponent chosen for contrast
+
+    float m_image;
+    float m_mean;
 
 
     // ************************************************************************
