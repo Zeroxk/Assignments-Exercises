@@ -14,6 +14,8 @@ GLCubeWidget::GLCubeWidget(QWidget *parent) : QGLWidget(parent) {
     // Initialize class members
     m_matRotX.identity();
     m_matTrY.identity();
+    m_matScale.identity();
+    m_prevScale = 1.0;
 
     // TODO (CA0): add any other necessary initialization here
 } /* constructor */
@@ -47,7 +49,7 @@ void GLCubeWidget::paintGL() {
     Matrix4d mat;
 
     // TODO (CA0): change this part in order to compute the proper transformation
-    mat = m_matRotX * m_matTrY;   // Try this!
+    mat = m_matRotX * m_matRotY * m_matScale;   // Try this!
     //mat = m_matTrY * m_matRotX;     // Try this!
 
     // Set the transformation matrix
@@ -92,9 +94,11 @@ void GLCubeWidget::mousePressEvent(QMouseEvent *event) {
     // event->x()
     // event->y()
     int y = event->y();
+    int x = event->x();
 
     // Store the current mouse position in a class variable
     m_prevMouseY = y;
+    m_prevMouseX = x;
 
     updateGL(); // Update the scene (automatically calls paintGL())
 } /* mousePressEvent() */
@@ -109,9 +113,11 @@ void GLCubeWidget::mouseMoveEvent(QMouseEvent *event) {
     //   event->x()
     //   event->y()
     int y = event->y();
+    int x = event->x();
 
     // Compute the mouse displacement with respect to the stored position
     int dy = y - m_prevMouseY;
+    int dx = x - m_prevMouseX;
 
     // Check which button is pressed
     if(event->buttons() & Qt::LeftButton) {
@@ -124,6 +130,13 @@ void GLCubeWidget::mouseMoveEvent(QMouseEvent *event) {
         m_matRotX *= rotX;
 
         //TODO (CA0): do the same for rotation around the y axis
+
+        Matrix4d rotY;
+        rotY.identity();
+        rotY.rotate(0.5 * dx, Vector3d(0., 1., 0.));
+
+        // Update the stored transformation with the one just computed
+        m_matRotY *= rotY;
     }
     else if(event->buttons() & Qt::RightButton) {
         // Compute the rotation matrix
@@ -141,6 +154,7 @@ void GLCubeWidget::mouseMoveEvent(QMouseEvent *event) {
 
     // TODO: Overwrite the old mouse position with the current one
     m_prevMouseY = y;
+    m_prevMouseX = x;
 
     updateGL(); // Update the scene (automatically calls paintGL())
 } /* mouseMoveEvent() */
@@ -164,6 +178,17 @@ void GLCubeWidget::wheelEvent(QWheelEvent *event) {
     //   event->delta();
     // Compute a scaling matrix according to the rotation amount
     // Update the stored transformation with the one just computed
+
+    double deg = (double)event->delta()/8.0;
+    double steps = deg/15.0;
+
+    double sc = m_prevScale + ((5*steps)/100.0);
+
+    Matrix4d scale;
+    scale.scale(Vector3d(sc,sc,sc));
+
+    m_matScale = scale;
+    m_prevScale = sc;
 
     updateGL(); // Update the scene (automatically calls paintGL())
 } /* wheelEvent() */

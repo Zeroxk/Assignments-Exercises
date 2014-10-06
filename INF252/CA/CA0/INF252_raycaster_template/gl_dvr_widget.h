@@ -2,6 +2,7 @@
 #define GL_DVR_WIDGET_H
 
 #include <QGLWidget>
+#include <Matrix4.h>
 
 class TransferFunction;
 class Volume;
@@ -33,6 +34,8 @@ public:
     void updateContent();
 
     // TODO (CA2&3): add any other method you need here
+
+    void setStaticRes(int id);
 
 
     // ************************************************************************
@@ -75,6 +78,8 @@ private:
     Volume *mp_volume;
     /// pointer to the transfer function to be used to display the volume
     TransferFunction *mp_transferFunction;
+    const int resOptions [5] = {64,128,256,512,1024};
+    int staticRes;
 
     int m_wndWidth;           ///< the width of the OpenGL context
     int m_wndHeight;          ///< the height of the OpenGL context
@@ -86,8 +91,13 @@ private:
 
     // TODO (CA2&3): add anything else you need here
 
+    Matrix4d m_matRotX;
+    Matrix4d m_matRotY;
+
     int m_prevMouseY;
     int m_prevMouseX;
+    double m_prevScale;
+    double m_prevMouseScale;
 
 
     // ************************************************************************

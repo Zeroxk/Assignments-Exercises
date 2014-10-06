@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      19,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,20 +35,21 @@ static const uint qt_meta_data_MainWindow[] = {
       40,   11,   11,   11, 0x0a,
       61,   56,   11,   11, 0x0a,
       89,   83,   11,   11, 0x0a,
-     115,  112,   11,   11, 0x0a,
-     147,  112,   11,   11, 0x0a,
-     187,  112,   11,   11, 0x0a,
-     214,  112,   11,   11, 0x0a,
-     246,  112,   11,   11, 0x0a,
-     281,  275,   11,   11, 0x0a,
-     313,  112,   11,   11, 0x0a,
-     341,  112,   11,   11, 0x0a,
-     367,  112,   11,   11, 0x0a,
-     398,  112,   11,   11, 0x0a,
-     433,   11,   11,   11, 0x0a,
-     443,   11,   11,   11, 0x0a,
-     452,   11,   11,   11, 0x0a,
-     468,  461,   11,   11, 0x0a,
+     116,  112,   11,   11, 0x0a,
+     139,  136,   11,   11, 0x0a,
+     171,  136,   11,   11, 0x0a,
+     211,  136,   11,   11, 0x0a,
+     238,  136,   11,   11, 0x0a,
+     270,  136,   11,   11, 0x0a,
+     305,  299,   11,   11, 0x0a,
+     337,  136,   11,   11, 0x0a,
+     365,  136,   11,   11, 0x0a,
+     391,  136,   11,   11, 0x0a,
+     422,  136,   11,   11, 0x0a,
+     457,   11,   11,   11, 0x0a,
+     467,   11,   11,   11, 0x0a,
+     476,   11,   11,   11, 0x0a,
+     492,  485,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -56,7 +57,8 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0loadVolume()\0openTFEditor()\0"
     "updateContent()\0axis\0changeSlicerAxis(int)\0"
-    "slice\0changeSlicerSlice(int)\0id\0"
+    "slice\0changeSlicerSlice(int)\0exp\0"
+    "changeContrast(int)\0id\0"
     "changeDvrDynamicResolution(int)\0"
     "changeDvrGradientInterpolationMode(int)\0"
     "changeDvrGradientMode(int)\0"
@@ -82,20 +84,21 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->updateContent(); break;
         case 3: _t->changeSlicerAxis((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->changeSlicerSlice((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->changeDvrDynamicResolution((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->changeDvrGradientInterpolationMode((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 7: _t->changeDvrGradientMode((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 8: _t->changeDvrInterpolationMode((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 9: _t->changeDvrProjectionMode((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 10: _t->changeDvrRayCastingStep((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 11: _t->changeDvrRenderingMode((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 12: _t->changeDvrShadingType((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 13: _t->changeDvrStaticResolution((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->changeDvrTransferFunctionType((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: _t->resetTF(); break;
-        case 16: _t->loadTF(); break;
-        case 17: _t->saveTF(); break;
-        case 18: _t->logTF((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 5: _t->changeContrast((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->changeDvrDynamicResolution((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->changeDvrGradientInterpolationMode((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->changeDvrGradientMode((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->changeDvrInterpolationMode((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 10: _t->changeDvrProjectionMode((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->changeDvrRayCastingStep((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 12: _t->changeDvrRenderingMode((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->changeDvrShadingType((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 14: _t->changeDvrStaticResolution((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->changeDvrTransferFunctionType((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 16: _t->resetTF(); break;
+        case 17: _t->loadTF(); break;
+        case 18: _t->saveTF(); break;
+        case 19: _t->logTF((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -133,9 +136,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 19)
+        if (_id < 20)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 19;
+        _id -= 20;
     }
     return _id;
 }

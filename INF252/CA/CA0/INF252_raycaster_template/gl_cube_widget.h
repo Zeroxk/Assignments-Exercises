@@ -50,11 +50,18 @@ private:
     int m_wndHeight;    ///< the height of the OpenGL context
 
     int m_prevMouseY;   ///< Y-position of the mouse at the last callback
+    int m_prevMouseX;
+
+    double m_prevScale;
 
     // TODO (CA0): define here any other class variable you may need
 
     Matrix4d m_matRotX; ///< Matrix for the rotation around the Y axis
+    Matrix4d m_matRotY;
     Matrix4d m_matTrY;  ///< Matrix for the translation along the Y axis
+    Matrix4d m_matTryX;
+
+    Matrix4d m_matScale;
 
     // TODO (CA0): define here any other matrix you may need
 

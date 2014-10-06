@@ -39,13 +39,6 @@ Eb = 10.0
 N0 = 5.0
 res = []
 for i in range(100):
-    '''
-    val = round(genAWGN(R,Eb, N0))
-    if val not in res:
-        res[val] = 0
-    
-    res[val] += 1
-    '''
     res.append(genAWGN(R,Eb,N0))
 
 with open('test.csv', "wb") as of:

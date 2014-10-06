@@ -3,19 +3,23 @@ public class Vigenere {
 
 	public final static String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-	public final static String cipherText = "ocwyikoooniwugpmxwktzdwgtssayjzwyemdlbnqaaavsuwdvbrflauplo" +
+	/*public static String cipherText = "ocwyikoooniwugpmxwktzdwgtssayjzwyemdlbnqaaavsuwdvbrflauplo" +
 			"oubfgqhgcscmgzlatoedcsdeidpbhtmuovpiekifpimfnoamvlpqfxejsm" +
 			"xmpgkccaykwfzpyuavtelwhrhmwkbbvgtguvtefjlodfefkvpxsgrsorvg" +
 			"tajbsauhzrzalkwuowhgedefnswmrciwcpaaavogpdnfpktdbalsisurln" +
 			"psjyeatcuceesohhdarkhwotikbroqrdfmzghgucebvgwcdqxgpbgqwlpb" +
 			"daylooqdmuhbdqgmyweuikmvswrvnqlszdmgaoqsakmlupsqforvtwvdfc" +
-			"jzvgsoaoqsacjkbrsevbel";
+			"jzvgsoaoqsacjkbrsevbel";*/
+            //public static String cipherText = "SSFZAFLDVWDTQDVFQETYLSEBSQFOFTZSFHKTOYPCJEKNSZUVWBSREALDVFQEGXSWSHLLCLQSXKHZQGLGSBFYGXSPAXWCRSXINOFSPIDVAWDFGEFPAXWCBOKDWKBSUGZDPCJEK";
 
+	public static String cipherText = "SSF ZAFL DVWDTQDVFQE TYLSE BSQ FOF TZSFHK TOY PCJEK NSZUVWBSR EAL DVFQE GX SWSHL LCLQS XKH ZQG LGSBFY GXS PAXWC RSXINOFSP IDV AWD FGEF PAXWC BOK DWKB SUGZD PCJEK";
+	//public static String cipherText = "vptnvffuntshtarptymjwzirappljmhhqvsubwlzzygvtyitarptyiougxiuydtgzhhvvmumshwkzgstfmekvmpkswdgbilvjljmglmjfqwioiivknulvvfemioiemojtywdsajtwmtcgluysdsumfbieugmvalvxkjduetukatymvkqzhvqvgvptytjwwldyeevquhlulwpkt";
 	public final static double alphFreq [] = {0.082,0.015,0.028,0.043,0.127,0.022,0.020,0.061,0.070,0.002
 		,0.008,0.040,0.024,0.067,0.075,0.019,0.001,0.060,0.063,0.091,0.028,0.010,0.023,0.001,0.020,0.001};
 
 	public static void main(String[] args) {
 
+		cipherText = cipherText.toLowerCase();
 		//Start by finding keylength
 		int keylength = findKeyLength(cipherText); 
 		System.out.println("Keylength is: " + keylength);
@@ -27,6 +31,13 @@ public class Vigenere {
 				//Find the keyword
 				decryptVector[i] = findKey(i,keylength);
 			}
+			
+			System.out.print("Key is: ");
+			for (int i = 0; i < decryptVector.length; i++) {
+				//System.out.println( 25-decryptVector[i]);
+				System.out.print(alphabet.charAt( (26-decryptVector[i]) % 25 ));
+			}
+			System.out.println();
 
 			//After we've found the keyword we decipher the ciphertext, if the result is sensible we are correct.
 			decipher(decryptVector, keylength);
@@ -49,7 +60,9 @@ public class Vigenere {
 		for (int i = 0; i < decryptVector.length; i++) {
 			for (int j = i; j < plainText.length; j += keylength) {
 				//Shifts cipherchar back to plaintextchar according to key
-				plainText[j] = alphabet.charAt( (alphabet.indexOf(plainText[j]) + decryptVector[i]) % 26);
+				if(Character.isLetter(plainText[j])) {
+					plainText[j] = alphabet.charAt( (alphabet.indexOf(plainText[j]) + decryptVector[i]) % 26);
+				}
 			}
 		}
 
@@ -122,7 +135,7 @@ public class Vigenere {
 	 */
 	private static int findKeyLength(String text) {
 
-		int tries = 10;
+		int tries = text.length();
 		int greatest = 0;
 		int keylength = -1;
 		String shiftText = text;
@@ -135,9 +148,12 @@ public class Vigenere {
 
 			for (int j = 0; j < text.length(); j++) {
 				//Check if we have a coincidence
-				if(text.charAt(j) == shiftText.charAt(j)) {
-					occurence++;
+				if(Character.isLetter(text.charAt(j)) && Character.isLetter(shiftText.charAt(j))) {
+					if(text.charAt(j) == shiftText.charAt(j)) {
+						occurence++;
+					}
 				}
+				
 			}
 
 			if(occurence > greatest) {

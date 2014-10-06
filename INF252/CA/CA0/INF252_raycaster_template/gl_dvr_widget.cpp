@@ -19,10 +19,14 @@ GLDvrWidget::GLDvrWidget(QWidget *parent) : QGLWidget(parent),
     m_textureId(0),
     m_texBuf(nullptr),
     m_texWidth(0),
-    m_texHeight(0)
-    // TODO (CA2): initialize default values here
-{
+    m_texHeight(0),
+    staticRes(resOptions[0])
 
+    // TODO (CA2): initialize default values here
+
+{
+    m_matRotX.identity();
+    m_matRotY.identity();
 } /* constructor */
 
 // Destructor
@@ -41,6 +45,7 @@ void GLDvrWidget::setVolume(Volume* v) {
     assert(v);
     mp_volume = v;
     // TODO (CA2): initialize everything you need according to the new Volume
+
 }
 
 // Set the transfer function to be used
@@ -54,6 +59,10 @@ void GLDvrWidget::updateContent() {
         updateTexture();  // Update the texture buffer
         updateGL();  // Update the display (cautomatically call paintGL())
     }
+}
+
+void GLDvrWidget::setStaticRes(int id) {
+    staticRes = resOptions[id];
 }
 
 
@@ -77,8 +86,9 @@ void GLDvrWidget::initializeGL() {
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
     // Create a fake default texture
-    m_texWidth = m_texHeight = 2;
-    m_texBuf = new float[3 * m_texWidth * m_texHeight];
+    m_texWidth = m_texHeight = staticRes;
+
+    m_texBuf = new float[m_texWidth * m_texHeight];
     m_texBuf[ 0] = 1.0f; m_texBuf[ 1] = 0.0f; m_texBuf[ 2] = 0.0f;
     m_texBuf[ 3] = 0.0f; m_texBuf[ 4] = 1.0f; m_texBuf[ 5] = 0.0f;
     m_texBuf[ 6] = 0.0f; m_texBuf[ 7] = 0.0f; m_texBuf[ 8] = 1.0f;
@@ -137,7 +147,9 @@ void GLDvrWidget::mousePressEvent(QMouseEvent *event) {
     std::cout << "GLDvrWidget::mousePressEvent()" << std::endl;
     // TODO (CA2)
     int y = event->y();
+    int x = event->x();
     m_prevMouseY = y;
+    m_prevMouseX = x;
 
     this->updateContent();
 }
@@ -146,6 +158,32 @@ void GLDvrWidget::mousePressEvent(QMouseEvent *event) {
 void GLDvrWidget::mouseMoveEvent(QMouseEvent *event) {
     std::cout << "GLDvrWidget::mouseMoveEvent()" << std::endl;
     // TODO (CA2)
+
+    int y = event->y();
+    int x = event->x();
+
+    int dy = y - m_prevMouseY;
+    int dx = x - m_prevMouseX;
+
+    if(event->buttons() & Qt::LeftButton) {
+
+        Matrix4d rotX;
+        rotX.identity();
+        rotX.rotate(0.5 * dy, Vector3d(1., 0., 0.));
+
+        // Update the stored transformation with the one just computed
+        m_matRotX *= rotX;
+
+        Matrix4d rotY;
+        rotY.identity();
+        rotY.rotate(0.5*dx,Vector3d(0.,1.,0.));
+
+        m_matRotY *= rotY;
+    }
+
+    m_prevMouseX = x;
+    m_prevMouseY = y;
+
     this->updateContent();
 }
 
@@ -160,6 +198,14 @@ void GLDvrWidget::mouseReleaseEvent(QMouseEvent *event) {
 void GLDvrWidget::wheelEvent(QWheelEvent *event) {
     std::cout << "GLDvrWidget::wheelEvent();" << std::endl;
     // TODO (CA2)
+
+    double deg = (double)event->delta()/8.0;
+    double steps = deg/15.0;
+
+    double sc = m_prevMouseScale + ((5*steps)/100.0);
+
+    m_prevMouseScale = sc;
+
     this->updateContent();
 }
 
@@ -172,6 +218,30 @@ void GLDvrWidget::updateTexture() {
     assert(mp_transferFunction);
 
     // TODO (CA2): perform Direct Volume Rendering here
+
+    Vector3d C00 = Vector3d(0,0,0);
+    Vector3d C01 = Vector3d(0,m_texHeight,0);
+    Vector3d C10 = Vector3d(m_texWidth,0,0);
+    Vector3d C11 = Vector3d(m_texWidth,m_texHeight,0);
+
+    Matrix4d rotate;
+
+    rotate = m_matRotX * m_matRotY;
+
+    Matrix4d scale;
+    scale.scale(Vector3d(m_prevMouseScale,m_prevMouseScale,m_prevMouseScale));
+
+    int m_maxDim = m_texHeight;
+
+    Matrix4d T;
+    T.translate(Vector3d(mp_volume->getWidth(),mp_volume->getHeight(),mp_volume->getDepth()));
+    Matrix4d Tv_center = T.getTranslated( 0.5*Vector3d(mp_volume->getWidth(),mp_volume->getHeight(),mp_volume->getDepth())) ;
+    Matrix4d Tz = T.getTranslated(Vector3d(0.,0.,(double)(-2*m_maxDim)));
+
+    Matrix4d M = Tv_center*rotate*scale*Tz*Tv_center;
+
+    C00 *= M;
+
 
 
 

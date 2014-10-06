@@ -156,6 +156,7 @@ void MainWindow::changeDvrStaticResolution(int id) {
     std::cout << "changeDvrResolution(" << id << ")"
               << std::endl;
     // TODO (CA3)
+    m_glDvrWidget->setStaticRes(id);
     m_glDvrWidget->updateContent();
 }
 // Called when the dynamic resolution dropdown menu changes

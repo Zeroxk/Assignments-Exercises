@@ -30,7 +30,16 @@ elif algType == 'D':
 biases = {}
 for line in lines:
     key = int(line[0])
-    biases[key] = [int(x) for x in list(line[3:].replace(',',''))]
+    #tmp = line[3:].replace(",","")
+    tmp = iter(line[3:])
+    res = []
+    #print tmp
+    for i in tmp:
+        #print i
+        if i.isdigit():
+            res.append(int(i))
+        
+    biases[key] = res
 
 print biases
 
